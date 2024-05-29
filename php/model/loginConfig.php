@@ -19,12 +19,10 @@ if(isset($_POST['signinBtn'])){
   $config['baseSearch'] = 'dc=izzitelecom,dc=net';
   $config['columnaLdap'] = 'cn,mail';
 
- 
 
+/*
   // conexión al servidor LDAP
   $ldapconn = ldap_connect($config['urlLdap']) or die("Could not connect to LDAP server.");
-
- 
 
 	if ($ldapconn) {
 		// realizando la autenticación
@@ -69,7 +67,8 @@ if(isset($_POST['signinBtn'])){
 	  }
 		ldap_close($ldapconn);
 	} 
-   
+*/
+  
     #Se valida que los campos de texto user & password contengan información.
     if (!empty($usuario) && !empty($passw)) {
       

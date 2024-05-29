@@ -1,8 +1,16 @@
+const btnEnviar = document.querySelector('#enviarApi');
+const docSizeOne = document.querySelector('#docSizeOne');
+const docSizeTwo = document.querySelector('#docSizeTwo');
+const docSizeThree = document.querySelector('#docSizeThree');
+let fileSizeOne = 0;
+let fileSizeTwo = 0;
+let fileSizeThree = 0;
+
 const sizeValidate = (file, identificador)=>{
-    if(file.size > 1 * 1024 * 1024)
+    if(file.size > 4 * 1024 * 1024)
     {
         document.getElementById(identificador).value = '';
-    	Swal.fire("Warning","Cada archivo no puede exceder 1 Mega byte de tamaño","warning");
+    	Swal.fire("Warning","Los archivos no pueden valer más de 4 Mega bytes de tamaño","warning");
 
         return;
     }
@@ -12,27 +20,29 @@ document.querySelector('#formFileSmIdentifica').addEventListener('change', ()=>{
     let fileIdentifica = document.getElementById('formFileSmIdentifica').files[0];
     if (fileIdentifica !== "") {
         sizeValidate(fileIdentifica,"formFileSmIdentifica");
+        fileSizeOne = (fileIdentifica.size)/(1024*1024);
+        docSizeOne.value = fileSizeOne.toFixed(2) + " MB";
     }
-
 });
 
 document.querySelector('#formFileSmSolOriginal').addEventListener('change', ()=>{
     let fileIdentifica = document.getElementById('formFileSmSolOriginal').files[0];
     if (fileIdentifica !== "") {
         sizeValidate(fileIdentifica,"formFileSmSolOriginal");
+        fileSizeTwo = (fileIdentifica.size)/(1024*1024);
+        docSizeTwo.value = fileSizeTwo.toFixed(2) + " MB";
     }
-
 });
 
 document.querySelector('#formFileSmJurada').addEventListener('change', ()=>{
     let fileIdentifica = document.getElementById('formFileSmJurada').files[0];
     if (fileIdentifica !== "") {
         sizeValidate(fileIdentifica,"formFileSmJurada");
+        fileSizeThree = (fileIdentifica.size)/(1024*1024);
+        docSizeThree.value = fileSizeThree.toFixed(2) + " MB";
     }
-
 });
 
-const btnEnviar = document.querySelector('#enviarApi');
 btnEnviar.addEventListener('click', async ()=>{
     const numTel = document.getElementById('numeroFrom');
     const numTo = document.getElementById('numeroTo');
@@ -71,6 +81,16 @@ btnEnviar.addEventListener('click', async ()=>{
                 text: 'Something went wrong!',
                 html: '<h4>Oops...</h4>' + '<p>Los selectores de documentos no pueden estar vacíos</p>',
                 footer: '<p>Selectores de Documentos</p>'
+            })
+            return false;
+        }
+        if ((fileSizeOne + fileSizeTwo + fileSizeThree) > 4) {
+            Swal.fire({
+                icon: 'error',
+                //title: 'Oops...',
+                text: 'Something went wrong!',
+                html: '<h4>Oops...</h4>' + '<p>El total de tamaño de los archivos adjuntos no puede ser mayor a 4 Mega Bytes</p>',
+                footer: '<p>Sección de Archivos Adjuntos</p>'
             })
             return false;
         }

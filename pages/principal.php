@@ -16,9 +16,9 @@ if (isset($_SESSION['usuario'])) {
       session_destroy();
       header("Location:../login.php");
     }
-    $stid = oci_parse($conn, "SELECT IDO, EMPRESA FROM SPN_MSJ_RECEPTORA ORDER BY IDO ASC");
+    $stid = oci_parse($conn, "SELECT IDO, EMPRESA FROM SPN_MSJ_RECEPTORA WHERE IDO = 102 ORDER BY IDO ASC");
     oci_execute($stid);
-    $stidFix = oci_parse($conn, "SELECT  * FROM SPN_MSJ_TIPO_PORT ORDER BY TIPO_DE_PORTACION ASC");
+    $stidFix = oci_parse($conn, "SELECT  * FROM SPN_MSJ_TIPO_PORT WHERE TIPO_DE_PORTACION NOT LIKE '%PP%' ORDER BY TIPO_DE_PORTACION ASC");
     oci_execute($stidFix);
   } catch (\Throwable $th) {
     //throw $th;
@@ -310,10 +310,10 @@ if (isset($_SESSION['usuario'])) {
                 <div class="form-group">
                   <label for="example-text-input" class="form-control-label">Empresa Receptora</label>
                   <select class="form-select" aria-label="Default select example" id="ido">
-                    <option value="" selected>-Seleccione un IDO-</option>
+                    <!-- <option value="" selected>-Seleccione un IDO-</option> -->
                     <?php 
                           while ($row = oci_fetch_array($stid, OCI_ASSOC)) {?>
-                            <option value="<?php echo"". $row['IDO']?>"><?php echo"".$row['EMPRESA']?></option>
+                            <option value="<?php echo"". $row['IDO']?>" selected><?php echo"".$row['EMPRESA']?></option>
                             <?php }?>
                   </select>
                 </div>
@@ -397,8 +397,8 @@ if (isset($_SESSION['usuario'])) {
                 <div class="form-group">
                   <div class="d-flex align-items-center">
                     <p class="mb-0">Número (s) a Portar</p>
-                  </div><span style="font-size: 10px;">Para números individuales el From y el To se deben llenar con el
-                    mismo número.</span>
+                  </div>
+                  <i class="text-secondary fs-6">Para números individuales el From y el To se deben llenar con el mismo número.</i>
                   <div class="row">
                     <div class="col-md-4">
                       <label for="example-text-input" class="form-control-label">From:</label>
@@ -423,9 +423,9 @@ if (isset($_SESSION['usuario'])) {
                   </div>
                 </div>
                 <div class="mb-3 mostrar-attach" id="attachDocNoNip">
-                  <div class="row">
+                  <div class="row mb-3">
                     <div class="col-md-3">
-                      <label for="formFileSm" class="form-label">Seleccione tipo de documento.</label>
+                      <label for="formFileSm" class="form-label">Tipo de documento:</label>
                       <select class="form-select" aria-label="Default select example" name="" id="selectDocumentOne">
                         <option value="">-Seleccionar-</option>
                         <option value="S">Formulario de Solicitud de Portación</option>
@@ -440,14 +440,18 @@ if (isset($_SESSION['usuario'])) {
                         <option value="R">Documento de Recuperación (Comprobante de Cancelación)</option>
                       </select>
                     </div>
-                    <div class="col-md-9">
-                      <label for="formFileSm" class="form-label">Adjuntar Documento Seleccionado.</label>
-                      <input class="form-control " id="formFileSmIdentifica" type="file" accept=".pdf,.gif,.jpg">
+                    <div class="col-md-7">
+                      <label for="formFileSm" class="form-label">Adjuntar Documento:</label>
+                      <input class="form-control" id="formFileSmIdentifica" type="file" accept=".pdf,.jpg,.gif">
+                    </div>
+                    <div class="col-md-2">
+                      <label class="form-label">Tamaño:</label>
+                      <input class="form-control" type="text" placeholder="Default input" aria-label="default input example" id="docSizeOne" disabled>
                     </div>
                   </div>
-                  <div class="row">
+                  <div class="row mb-3">
                     <div class="col-md-3">
-                      <label for="formFileSm" class="form-label">Seleccione tipo de documento.</label>
+                      <label for="formFileSm" class="form-label">Tipo de documento.</label>
                       <select class="form-select" aria-label="Default select example" name="" id="selectDocumentTwo">
                         <option value="">-Seleccionar-</option>
                         <option value="S">Formulario de Solicitud de Portación</option>
@@ -462,14 +466,18 @@ if (isset($_SESSION['usuario'])) {
                         <option value="R">Documento de Recuperación (Comprobante de Cancelación)</option>
                       </select>
                     </div>
-                    <div class="col-md-9">
-                      <label for="formFileSm" class="form-label">Adjuntar Documento Seleccionado.</label>
-                      <input class="form-control " id="formFileSmSolOriginal" type="file" accept=".pdf,.gif,.jpg">
+                    <div class="col-md-7">
+                      <label for="formFileSm" class="form-label">Adjuntar Documento.</label>
+                      <input class="form-control" id="formFileSmSolOriginal" type="file" accept=".pdf,.png,.jpg">
+                    </div>
+                    <div class="col-md-2">
+                      <label class="form-label">Tamaño:</label>
+                      <input class="form-control" type="text" placeholder="Default input" aria-label="default input example" id="docSizeTwo" disabled>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-md-3">
-                      <label for="formFileSm" class="form-label">Seleccione tipo de documento.</label>
+                      <label for="formFileSm" class="form-label">Tipo de documento.</label>
                       <select class="form-select" aria-label="Default select example" name="" id="selectDocumentThree">
                         <option value="">-Seleccionar-</option>
                         <option value="S">Formulario de Solicitud de Portación</option>
@@ -484,12 +492,17 @@ if (isset($_SESSION['usuario'])) {
                         <option value="R">Documento de Recuperación (Comprobante de Cancelación)</option>
                       </select>
                     </div>
-                    <div class="col-md-9">
-                      <label for="formFileSm" class="form-label">Adjuntar Documento Seleccionado.</label>
-                      <input class="form-control " id="formFileSmJurada" type="file" accept=".pdf,.gif,.jpg">
+                    <div class="col-md-7">
+                      <label for="formFileSm" class="form-label">Adjuntar Documento.</label>
+                      <input class="form-control" id="formFileSmJurada" type="file" accept=".pdf,.png,.jpg">
+                    </div>
+                    <div class="col-md-2">
+                      <label class="form-label">Tamaño:</label>
+                      <input class="form-control" type="text" placeholder="Default input" aria-label="default input example" id="docSizeThree" disabled>
                     </div>
                   </div>
                 </div>
+                <hr class="horizontal dark my-3">
                 <div class="row">
                   <div class="col-md-12" id="listadoMoralGob" style="display:none;">
                     <div class="row">
@@ -1124,7 +1137,7 @@ if (isset($_SESSION['usuario'])) {
       let valor = document.querySelector('#nip').value;
       const attachDiv = document.querySelector('.mostrar-attach');
       if (valor == "Attachments") {
-        attachDiv.style.display = "inline";
+        attachDiv.style.display = "inline-block";
       }else{
         
       }
