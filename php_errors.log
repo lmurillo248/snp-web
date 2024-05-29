@@ -1,0 +1,38 @@
+[02-Apr-2024 16:36:54 UTC] PHP Warning:  ldap_bind(): Unable to bind to server: Invalid credentials in C:\inetpub\wwwroot\portabilidad\php\model\loginConfig.php on line 31
+[02-Apr-2024 16:38:55 UTC] PHP Warning:  ldap_bind(): Unable to bind to server: Invalid credentials in C:\inetpub\wwwroot\portabilidad\php\model\loginConfig.php on line 31
+[02-Apr-2024 16:42:50 UTC] PHP Warning:  ldap_bind(): Unable to bind to server: Invalid credentials in C:\inetpub\wwwroot\portabilidad\php\model\loginConfig.php on line 31
+[02-Apr-2024 16:43:36 UTC] PHP Warning:  ldap_bind(): Unable to bind to server: Invalid credentials in C:\inetpub\wwwroot\portabilidad\php\model\loginConfig.php on line 31
+[02-Apr-2024 16:45:36 UTC] PHP Warning:  ldap_bind(): Unable to bind to server: Invalid credentials in C:\inetpub\wwwroot\portabilidad\php\model\loginConfig.php on line 31
+[02-Apr-2024 16:48:35 UTC] PHP Warning:  ldap_bind(): Unable to bind to server: Invalid credentials in C:\inetpub\wwwroot\portabilidad\php\model\loginConfig.php on line 45
+[02-Apr-2024 16:57:08 UTC] PHP Warning:  ldap_bind(): Unable to bind to server: Invalid credentials in C:\inetpub\wwwroot\portabilidad\php\model\loginConfig.php on line 45
+[02-Apr-2024 17:07:40 UTC] PHP Warning:  ldap_bind(): Unable to bind to server: Invalid credentials in C:\inetpub\wwwroot\portabilidad\php\model\loginConfig.php on line 31
+[02-Apr-2024 17:08:02 UTC] PHP Warning:  ldap_bind(): Unable to bind to server: Invalid credentials in C:\inetpub\wwwroot\portabilidad\php\model\loginConfig.php on line 31
+[02-Apr-2024 17:08:18 UTC] PHP Warning:  ldap_bind(): Unable to bind to server: Invalid credentials in C:\inetpub\wwwroot\portabilidad\php\model\loginConfig.php on line 31
+[02-Apr-2024 17:14:30 UTC] PHP Warning:  ldap_search(): Search: Operations error in C:\inetpub\wwwroot\portabilidad\php\model\loginConfig.php on line 44
+[02-Apr-2024 17:19:02 UTC] PHP Warning:  ldap_bind(): Unable to bind to server: Invalid credentials in C:\inetpub\wwwroot\portabilidad\php\model\loginConfig.php on line 31
+[02-Apr-2024 17:19:59 UTC] PHP Warning:  ldap_bind(): Unable to bind to server: Invalid credentials in C:\inetpub\wwwroot\portabilidad\php\model\loginConfig.php on line 31
+[02-Apr-2024 17:21:50 UTC] PHP Warning:  ldap_bind(): Unable to bind to server: Invalid credentials in C:\inetpub\wwwroot\portabilidad\php\model\loginConfig.php on line 31
+[02-Apr-2024 17:22:33 UTC] PHP Warning:  ldap_bind(): Unable to bind to server: Invalid credentials in C:\inetpub\wwwroot\portabilidad\php\model\loginConfig.php on line 31
+[02-Apr-2024 17:23:59 UTC] PHP Warning:  ldap_bind(): Unable to bind to server: Invalid credentials in C:\inetpub\wwwroot\portabilidad\php\model\loginConfig.php on line 31
+[02-Apr-2024 17:30:23 UTC] PHP Warning:  ldap_bind(): Unable to bind to server: Invalid credentials in C:\inetpub\wwwroot\portabilidad\php\model\loginConfig.php on line 36
+[02-Apr-2024 17:31:04 UTC] PHP Warning:  ldap_bind(): Unable to bind to server: Invalid credentials in C:\inetpub\wwwroot\portabilidad\php\model\loginConfig.php on line 36
+[02-Apr-2024 17:35:27 UTC] PHP Warning:  ldap_bind(): Unable to bind to server: Invalid credentials in C:\inetpub\wwwroot\portabilidad\php\model\loginConfig.php on line 31
+[02-Apr-2024 17:35:46 UTC] PHP Warning:  ldap_bind(): Unable to bind to server: Invalid credentials in C:\inetpub\wwwroot\portabilidad\php\model\loginConfig.php on line 31
+[02-Apr-2024 17:35:56 UTC] PHP Warning:  ldap_search(): Search: Operations error in C:\inetpub\wwwroot\portabilidad\php\model\loginConfig.php on line 44
+[02-Apr-2024 17:36:10 UTC] PHP Warning:  ldap_search(): Search: Operations error in C:\inetpub\wwwroot\portabilidad\php\model\loginConfig.php on line 44
+[02-Apr-2024 17:36:16 UTC] PHP Warning:  ldap_search(): Search: Operations error in C:\inetpub\wwwroot\portabilidad\php\model\loginConfig.php on line 44
+[02-Apr-2024 17:44:56 UTC] PHP Warning:  ldap_bind(): Unable to bind to server: Invalid credentials in C:\inetpub\wwwroot\portabilidad\php\model\loginConfig.php on line 31
+[02-Apr-2024 17:44:56 UTC] PHP Warning:  Undefined variable $user in C:\inetpub\wwwroot\portabilidad\php\model\loginConfig.php on line 31
+[02-Apr-2024 17:50:58 UTC] PHP Warning:  ldap_bind(): Unable to bind to server: Invalid credentials in C:\inetpub\wwwroot\portabilidad\php\model\loginConfig.php on line 31
+[02-Apr-2024 17:50:58 UTC] PHP Warning:  Undefined variable $user in C:\inetpub\wwwroot\portabilidad\php\model\loginConfig.php on line 31
+[02-Apr-2024 17:52:01 UTC] PHP Warning:  ldap_bind(): Unable to bind to server: Invalid credentials in C:\inetpub\wwwroot\portabilidad\php\model\loginConfig.php on line 31
+[03-Apr-2024 00:28:37 UTC] PHP Warning:  ldap_bind(): Unable to bind to server: Invalid credentials in C:\inetpub\wwwroot\portabilidad\php\model\loginConfig.php on line 31
+[03-Apr-2024 00:50:10 UTC] PHP Warning:  ldap_bind(): Unable to bind to server: Invalid credentials in C:\inetpub\wwwroot\portabilidad\php\model\loginConfig.php on line 31
+[03-Apr-2024 00:54:28 UTC] PHP Warning:  ldap_bind(): Unable to bind to server: Invalid credentials in C:\inetpub\wwwroot\portabilidad\php\model\loginConfig.php on line 31
+[03-Apr-2024 00:55:00 UTC] PHP Warning:  ldap_bind(): Unable to bind to server: Invalid credentials in C:\inetpub\wwwroot\portabilidad\php\model\loginConfig.php on line 31
+[03-Apr-2024 00:55:23 UTC] PHP Warning:  ldap_bind(): Unable to bind to server: Invalid credentials in C:\inetpub\wwwroot\portabilidad\php\model\loginConfig.php on line 31
+[09-Apr-2024 18:48:18 UTC] PHP Warning:  ldap_bind(): Unable to bind to server: Invalid credentials in C:\inetpub\wwwroot\portabilidad\php\model\loginConfig.php on line 31
+[19-Apr-2024 15:34:48 UTC] PHP Warning:  ldap_bind(): Unable to bind to server: Invalid credentials in C:\inetpub\wwwroot\portabilidad\php\model\loginConfig.php on line 31
+[20-Apr-2024 00:15:07 UTC] PHP Warning:  ldap_bind(): Unable to bind to server: Invalid credentials in C:\inetpub\wwwroot\portabilidad\php\model\loginConfig.php on line 31
+[20-Apr-2024 00:15:22 UTC] PHP Warning:  ldap_bind(): Unable to bind to server: Invalid credentials in C:\inetpub\wwwroot\portabilidad\php\model\loginConfig.php on line 31
+[22-Apr-2024 17:12:43 UTC] PHP Warning:  ldap_bind(): Unable to bind to server: Invalid credentials in C:\inetpub\wwwroot\portabilidad\php\model\loginConfig.php on line 31

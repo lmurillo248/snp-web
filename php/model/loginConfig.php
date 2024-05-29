@@ -45,7 +45,7 @@ if(isset($_POST['signinBtn'])){
 
 		  $data = ldap_get_entries($ldapconn, $result);
 		  
-
+      print("OK");
 
 		
 		} else{
@@ -69,7 +69,6 @@ if(isset($_POST['signinBtn'])){
 	  }
 		ldap_close($ldapconn);
 	} 
-    
    
     #Se valida que los campos de texto user & password contengan información.
     if (!empty($usuario) && !empty($passw)) {

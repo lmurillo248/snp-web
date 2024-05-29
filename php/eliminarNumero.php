@@ -58,7 +58,8 @@ try {
         "</NPCMessage>\n" .
     "</NPCData>";
 
-    $location = "http://172.21.141.123:7001/spn/spnService?WSDL";
+    // $location = "http://172.21.141.123:7001/spn/spnService?WSDL";
+    $location = "http://172.28.108.181:7001/spn/spnService?WSDL";
 		
     $request = '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:spn="https://bmartinezc:7001/spnService">
                     <soapenv:Header/>

@@ -18,7 +18,7 @@ if (isset($_SESSION['usuario'])) {
     }
     $stid = oci_parse($conn, "SELECT IDO, EMPRESA FROM SPN_MSJ_RECEPTORA ORDER BY IDO ASC");
     oci_execute($stid);
-    $stidFix = oci_parse($conn, "SELECT  TIPO_DE_PORTACION FROM SPN_MSJ_TIPO_PORT ORDER BY TIPO_DE_PORTACION ASC");
+    $stidFix = oci_parse($conn, "SELECT  * FROM SPN_MSJ_TIPO_PORT ORDER BY TIPO_DE_PORTACION ASC");
     oci_execute($stidFix);
   } catch (\Throwable $th) {
     //throw $th;
@@ -343,8 +343,15 @@ if (isset($_SESSION['usuario'])) {
                       <option value="">-Seleccione Tipo de Portación-</option>
                       <?php 
                           while ($rowfix = oci_fetch_array($stidFix, OCI_ASSOC)) {?>
-                            <option value="<?php echo"". $rowfix['TIPO_DE_PORTACION']?>"><?php echo"".$rowfix['TIPO_DE_PORTACION']?></option>
+                            <option value="<?php echo"". $rowfix['ID']?>"><?php echo"".$rowfix['TIPO_DE_PORTACION']?></option>
                             <?php }?>
+                            <!--
+                              5: Non Geographic Number Addition - Alta número no geográfico
+                              6: Mobile CPP - Móvil EQLLP
+                              7: Mobile MPP - Móvil EQRP
+                              8: Fixed - Fijo
+                              9: Non Geographic - No Geográfico
+                            -->
                     </select>
                   </div>
                 </div>
@@ -435,7 +442,7 @@ if (isset($_SESSION['usuario'])) {
                     </div>
                     <div class="col-md-9">
                       <label for="formFileSm" class="form-label">Adjuntar Documento Seleccionado.</label>
-                      <input class="form-control " id="formFileSmIdentifica" type="file" accept=".pdf,.png,.jpg">
+                      <input class="form-control " id="formFileSmIdentifica" type="file" accept=".pdf,.gif,.jpg">
                     </div>
                   </div>
                   <div class="row">
@@ -457,7 +464,7 @@ if (isset($_SESSION['usuario'])) {
                     </div>
                     <div class="col-md-9">
                       <label for="formFileSm" class="form-label">Adjuntar Documento Seleccionado.</label>
-                      <input class="form-control " id="formFileSmSolOriginal" type="file" accept=".pdf,.png,.jpg">
+                      <input class="form-control " id="formFileSmSolOriginal" type="file" accept=".pdf,.gif,.jpg">
                     </div>
                   </div>
                   <div class="row">
@@ -479,7 +486,7 @@ if (isset($_SESSION['usuario'])) {
                     </div>
                     <div class="col-md-9">
                       <label for="formFileSm" class="form-label">Adjuntar Documento Seleccionado.</label>
-                      <input class="form-control " id="formFileSmJurada" type="file" accept=".pdf,.png,.jpg">
+                      <input class="form-control " id="formFileSmJurada" type="file" accept=".pdf,.gif,.jpg">
                     </div>
                   </div>
                 </div>
