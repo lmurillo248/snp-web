@@ -5,13 +5,36 @@ const docSizeThree = document.querySelector('#docSizeThree');
 let fileSizeOne = 0;
 let fileSizeTwo = 0;
 let fileSizeThree = 0;
+let fileSizeFour = 0;
 
-const sizeValidate = (file, identificador)=>{
+
+const sizeValidate = (file, identificador, docSelector)=>{
     if(file.size > 4 * 1024 * 1024)
     {
-        document.getElementById(identificador).value = '';
-    	Swal.fire("Warning","Los archivos no pueden valer más de 4 Mega bytes de tamaño","warning");
+        let id = document.getElementById(identificador);
+        id.value = '';
+        let idFile = id.files[0];
 
+        let fileName = idFile.name;
+        fileName = fileName.toLowerCase();
+        let fileSize = (idFile.size)/(1024*1024);
+        fileName = fileName.toLowerCase();
+        let selector = document.getElementById(docSelector)
+        if(selector.value == ""){
+            if(fileName.includes("id") || fileIdentifica.name.includes("ine") || fileIdentifica.name.includes("ife")){
+                selector.value = "I";
+            } else if(fileName.includes("comprobante") || fileName.includes("portabilidad")){
+                selector.value = "S";
+            } else if(fileName.includes("acta") || fileName.includes("poder") || fileName.includes("constitutiva") || fileName.includes("legal") || fileName.includes("notario")){
+                selector.value = "P";
+            } else if(fileName.includes("jurad") || fileName.includes("recupera")){
+                selector.value = "R";
+            } else {
+                selector.value = "O";
+            }
+        }
+
+    	Swal.fire("Warning","Los archivos no pueden valer más de 4 Mega bytes de tamaño","warning");
         return;
     }
 }
@@ -19,27 +42,42 @@ const sizeValidate = (file, identificador)=>{
 document.querySelector('#formFileSmIdentifica').addEventListener('change', ()=>{
     let fileIdentifica = document.getElementById('formFileSmIdentifica').files[0];
     if (fileIdentifica !== "") {
-        sizeValidate(fileIdentifica,"formFileSmIdentifica");
+        sizeValidate(fileIdentifica,"formFileSmIdentifica", "selectDocumentOne");
         fileSizeOne = (fileIdentifica.size)/(1024*1024);
         docSizeOne.value = fileSizeOne.toFixed(2) + " MB";
+        console.log(fileIdentifica);
     }
 });
 
 document.querySelector('#formFileSmSolOriginal').addEventListener('change', ()=>{
     let fileIdentifica = document.getElementById('formFileSmSolOriginal').files[0];
     if (fileIdentifica !== "") {
-        sizeValidate(fileIdentifica,"formFileSmSolOriginal");
+        sizeValidate(fileIdentifica,"formFileSmSolOriginal", "selectDocumentTwo");
         fileSizeTwo = (fileIdentifica.size)/(1024*1024);
         docSizeTwo.value = fileSizeTwo.toFixed(2) + " MB";
+        console.log(fileIdentifica);
     }
+
 });
 
 document.querySelector('#formFileSmJurada').addEventListener('change', ()=>{
     let fileIdentifica = document.getElementById('formFileSmJurada').files[0];
     if (fileIdentifica !== "") {
-        sizeValidate(fileIdentifica,"formFileSmJurada");
+        sizeValidate(fileIdentifica,"formFileSmJurada", "selectDocumentThree");
         fileSizeThree = (fileIdentifica.size)/(1024*1024);
         docSizeThree.value = fileSizeThree.toFixed(2) + " MB";
+        console.log(fileIdentifica);
+    }
+
+});
+
+document.querySelector('#formFileSmRecovery').addEventListener('change', ()=>{
+    let fileIdentifica = document.getElementById('formFileSmRecovery').files[0];
+    if (fileIdentifica !== "") {
+        sizeValidate(fileIdentifica,"formFileSmRecovery", "selectDocumentFour");
+        fileSizeThree = (fileIdentifica.size)/(1024*1024);
+        docSizeThree.value = fileSizeThree.toFixed(2) + " MB";
+        console.log(fileIdentifica);
     }
 });
 
@@ -64,7 +102,7 @@ btnEnviar.addEventListener('click', async ()=>{
 
     //validación para que los controles estén llenos
     if (document.getElementById('excelFile').value !== "") {
-        if (document.getElementById('formFileSmJurada').value == "" || document.getElementById('formFileSmIdentifica').value == "" || document.getElementById('formFileSmSolOriginal').value == "") {
+        if (document.getElementById('formFileSmJurada').value == "" || document.getElementById('formFileSmIdentifica').value == "" || document.getElementById('formFileSmSolOriginal').value == "" || document.getElementById('attachDocRecovery').style.display !== "none"  && document.getElementById('formFileSmRecovery').value == "") {
             Swal.fire({
                 icon: 'error',
                 //title: '<p>Oops...</p>',
@@ -74,7 +112,7 @@ btnEnviar.addEventListener('click', async ()=>{
             })
             return false;
         }
-        if (document.querySelector('#selectDocumentOne').value == "" || document.querySelector('#selectDocumentTwo').value == "" || document.querySelector('#selectDocumentThree').value == "") {
+        if (document.querySelector('#selectDocumentOne').value == "" || document.querySelector('#selectDocumentTwo').value == "" || document.querySelector('#selectDocumentThree').value == "" || document.getElementById('attachDocRecovery').style.display !== "none"  && document.querySelector('#selectDocumentFour').value == "") {
             Swal.fire({
                 icon: 'error',
                 //title: 'Oops...',
@@ -84,12 +122,12 @@ btnEnviar.addEventListener('click', async ()=>{
             })
             return false;
         }
-        if ((fileSizeOne + fileSizeTwo + fileSizeThree) > 4) {
+        if ((fileSizeOne + fileSizeTwo + fileSizeThree + fileSizeFour) > 4) {
             Swal.fire({
                 icon: 'error',
                 //title: 'Oops...',
                 text: 'Something went wrong!',
-                html: '<h4>Oops...</h4>' + '<p>El total de tamaño de los archivos adjuntos no puede ser mayor a 4 Mega Bytes</p>',
+                html: '<h4>Oops...</h4>' + '<p>El total de tamaño de los archivos adjuntos no puede ser mayor a 4 Mega Bytes</p>' + '<p>Tamaño actual: ' + (fileSizeOne+fileSizeTwo+fileSizeThree+fileSizeFour).toFixed(2) + '</p>',
                 footer: '<p>Sección de Archivos Adjuntos</p>'
             })
             return false;
@@ -166,7 +204,7 @@ btnEnviar.addEventListener('click', async ()=>{
             return false;
         }
         if (radio2moral.checked || radio3gobierno.checked || radio5.checked) {
-            if (document.querySelector('#selectDocumentOne').value == "" || document.querySelector('#selectDocumentTwo').value == "" || document.querySelector('#selectDocumentThree').value == "") {
+            if (document.querySelector('#selectDocumentOne').value == "" || document.querySelector('#selectDocumentTwo').value == "" || document.querySelector('#selectDocumentThree').value == "" || document.getElementById('attachDocRecovery').style.display !== "none"  && document.querySelector('#selectDocumentFour').value == "") {
                 Swal.fire({
                     icon: 'error',
                     //title: 'Oops...',
@@ -176,7 +214,7 @@ btnEnviar.addEventListener('click', async ()=>{
                 });
                 return false;
             }
-            if (document.getElementById('formFileSmJurada').value == "" || document.getElementById('formFileSmIdentifica').value == "" || document.getElementById('formFileSmSolOriginal').value == "") {
+            if (document.getElementById('formFileSmJurada').value == "" || document.getElementById('formFileSmIdentifica').value == "" || document.getElementById('formFileSmSolOriginal').value == "" || document.getElementById('attachDocRecovery').style.display !== "none"  && document.getElementById('formFileSmRecovery').value == "") {
                 Swal.fire({
                     icon: 'error',
                     //title: '<p>Oops...</p>',
@@ -184,6 +222,16 @@ btnEnviar.addEventListener('click', async ()=>{
                     html: '<h4>Oops...</h4>' + '<p>Debe seleccionar los archivos adjuntos correspondientes en la sección de Attachments</p>',
                     footer: '<p>Sección de Archivos Adjuntos</p>'
                 });
+                return false;
+            }
+            if ((fileSizeOne + fileSizeTwo + fileSizeThree + fileSizeFour) > 4) {
+                Swal.fire({
+                    icon: 'error',
+                    //title: 'Oops...',
+                    text: 'Something went wrong!',
+                    html: '<h4>Oops...</h4>' + '<p>El total de tamaño de los archivos adjuntos no puede ser mayor a 4 Mega Bytes</p>' + '<p>Tamaño actual: ' + (fileSizeOne+fileSizeTwo+fileSizeThree+fileSizeFour).toFixed(2) + '</p>',
+                    footer: '<p>Sección de Archivos Adjuntos</p>'
+                })
                 return false;
             }
         }
@@ -254,6 +302,10 @@ btnEnviar.addEventListener('click', async ()=>{
         data.append("formFileSmIdentifica", document.getElementById('formFileSmIdentifica').files[0]);
         data.append("formFileSmSolOriginal", document.getElementById('formFileSmSolOriginal').files[0]);
         data.append("formFileSmJurada", document.getElementById('formFileSmJurada').files[0]);
+        if(document.getElementById("exampleRadios5").checked){
+            data.append("selectDocumentFour",document.querySelector('#selectDocumentFour').value); //agregado para el tipo de documento
+            data.append("formFileSmRecovery", document.getElementById('formFileSmRecovery').files[0]);
+        }
         if (numTel.value != "") {
             data.append("numTel", numTel.value);
             data.append("numTo", numTo.value);
@@ -288,6 +340,7 @@ btnEnviar.addEventListener('click', async ()=>{
                 let portTypeText = document.getElementById('PortType');
                 let portTypeTx = portTypeText.options[portTypeText.selectedIndex].text;
                 let idoText = document.getElementById('ido');
+                // guardar el texto del option seleccionado:
                 let idoTx = idoText.options[idoText.selectedIndex].text;
                 
                 Swal.fire({
@@ -301,8 +354,8 @@ btnEnviar.addEventListener('click', async ()=>{
                     footer: '<h4 style="color:#28a745">Operación exitosa</h4>'
                 });
                 function cleanScreenPort() {
-                    document.querySelector('#ido').value = "";
-                    document.querySelector('#PortType').value = "";
+                    document.querySelector('#ido').value = "102";
+                    document.querySelector('#PortType').value = "8";
                     document.getElementById('numeroFrom').value = "";
                     document.getElementById('numeroTo').value = "";
                     document.getElementById('nip').value = "";
@@ -310,12 +363,16 @@ btnEnviar.addEventListener('click', async ()=>{
                     document.getElementById('selectDocumentOne').value = "";
                     document.getElementById('selectDocumentTwo').value = "";
                     document.getElementById('selectDocumentThree').value = "";
+                    document.getElementById('selectDocumentFour').value = "";
                     document.getElementById('formFileSmIdentifica').value = "";
                     document.getElementById('formFileSmSolOriginal').value = "";
                     document.getElementById('formFileSmJurada').value = "";
+                    document.getElementById('formFileSmRecovery').value = "";
                     document.querySelector('#exampleRadios2').checked = false;
                     document.querySelector('#exampleRadios3').checked = false;
                     document.querySelector('#exampleRadios1').checked = true;
+                    document.querySelector('#exampleRadios4').checked = true;
+                    document.querySelector('#exampleRadios5').checked = false;
                     numeroFisica();
                     btnEnviar.disabled = false;
                 }

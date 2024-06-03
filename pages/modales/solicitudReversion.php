@@ -63,8 +63,8 @@
                                 </select>
                             </div>
                             <div class="col-md-6">
-                                <label for="formFileSm" class="form-label">Seleccione Archivo</label>
-                                <input class="form-control " id="formFileSmRevert" type="file" accept=".pdf,.gif,.jpg">
+                                <label for="formFileSm" class="form-label">Seleccione un Archivo</label>
+                                <input class="form-control" id="formFileSmRevert" type="file" accept=".pdf,.jpg">
                             </div>
                         </div>
                     </div>

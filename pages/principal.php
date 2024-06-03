@@ -313,7 +313,7 @@ if (isset($_SESSION['usuario'])) {
                     <!-- <option value="" selected>-Seleccione un IDO-</option> -->
                     <?php 
                           while ($row = oci_fetch_array($stid, OCI_ASSOC)) {?>
-                            <option value="<?php echo"". $row['IDO']?>" selected><?php echo"".$row['EMPRESA']?></option>
+                            <option value="<?php echo"". $row['IDO']?>" <?php if($row['IDO']=='102')echo"selected"?>><?php echo"".$row['EMPRESA']?></option>
                             <?php }?>
                   </select>
                 </div>
@@ -340,11 +340,11 @@ if (isset($_SESSION['usuario'])) {
                 <div class="row mb-3">
                   <div class="d-flex align-items-center">
                     <select class="form-select" aria-label="Default select example" name="" id="PortType">
-                      <option value="">-Seleccione Tipo de Portación-</option>
+                      <!-- <option value="">-Seleccione Tipo de Portación-</option> -->
                       <?php 
                           while ($rowfix = oci_fetch_array($stidFix, OCI_ASSOC)) {?>
-                            <option value="<?php echo"". $rowfix['ID']?>"><?php echo"".$rowfix['TIPO_DE_PORTACION']?></option>
-                            <?php }?>
+                            <option value="<?php echo"". $rowfix['ID']?>" <?php if($rowfix['ID']=='8')echo"selected"?>><?php echo"".$rowfix['TIPO_DE_PORTACION']?></option>
+                          <?php }?>
                             <!--
                               5: Non Geographic Number Addition - Alta número no geográfico
                               6: Mobile CPP - Móvil EQLLP
@@ -396,7 +396,7 @@ if (isset($_SESSION['usuario'])) {
                 </div>
                 <div class="form-group">
                   <div class="d-flex align-items-center">
-                    <p class="mb-0">Número (s) a Portar</p>
+                    <p class="mb-0">Número(s) a Portar</p>
                   </div>
                   <i class="text-secondary fs-6">Para números individuales el From y el To se deben llenar con el mismo número.</i>
                   <div class="row">
@@ -423,7 +423,7 @@ if (isset($_SESSION['usuario'])) {
                   </div>
                 </div>
                 <div class="mb-3 mostrar-attach" id="attachDocNoNip">
-                  <div class="row mb-3">
+                  <div class="row">
                     <div class="col-md-3">
                       <label for="formFileSm" class="form-label">Tipo de documento:</label>
                       <select class="form-select" aria-label="Default select example" name="" id="selectDocumentOne">
@@ -442,14 +442,14 @@ if (isset($_SESSION['usuario'])) {
                     </div>
                     <div class="col-md-7">
                       <label for="formFileSm" class="form-label">Adjuntar Documento:</label>
-                      <input class="form-control" id="formFileSmIdentifica" type="file" accept=".pdf,.jpg,.gif">
+                      <input class="form-control" id="formFileSmIdentifica" type="file" accept=".pdf,.jpg">
                     </div>
                     <div class="col-md-2">
                       <label class="form-label">Tamaño:</label>
                       <input class="form-control" type="text" placeholder="Default input" aria-label="default input example" id="docSizeOne" disabled>
                     </div>
                   </div>
-                  <div class="row mb-3">
+                  <div class="row">
                     <div class="col-md-3">
                       <label for="formFileSm" class="form-label">Tipo de documento.</label>
                       <select class="form-select" aria-label="Default select example" name="" id="selectDocumentTwo">
@@ -468,7 +468,7 @@ if (isset($_SESSION['usuario'])) {
                     </div>
                     <div class="col-md-7">
                       <label for="formFileSm" class="form-label">Adjuntar Documento.</label>
-                      <input class="form-control" id="formFileSmSolOriginal" type="file" accept=".pdf,.png,.jpg">
+                      <input class="form-control" id="formFileSmSolOriginal" type="file" accept=".pdf,.jpg">
                     </div>
                     <div class="col-md-2">
                       <label class="form-label">Tamaño:</label>
@@ -494,11 +494,37 @@ if (isset($_SESSION['usuario'])) {
                     </div>
                     <div class="col-md-7">
                       <label for="formFileSm" class="form-label">Adjuntar Documento.</label>
-                      <input class="form-control" id="formFileSmJurada" type="file" accept=".pdf,.png,.jpg">
+                      <input class="form-control" id="formFileSmJurada" type="file" accept=".pdf,.jpg">
                     </div>
                     <div class="col-md-2">
                       <label class="form-label">Tamaño:</label>
                       <input class="form-control" type="text" placeholder="Default input" aria-label="default input example" id="docSizeThree" disabled>
+                    </div>
+                  </div>
+                  <div class="row" id="attachDocRecovery" style="none">
+                    <div class="col-md-3">
+                      <label for="formFileSmRecovery" class="form-label">Tipo de documento.</label>
+                      <select class="form-select" aria-label="Default select example" name="" id="selectDocumentFour">
+                        <option value="">-Seleccionar-</option>
+                        <option value="S">Formulario de Solicitud de Portación</option>
+                        <option value="F">Factura</option>
+                        <option value="C">Contrato</option>
+                        <option value="I">ID</option>
+                        <option value="O">Otro</option>
+                        <option value="P">Poder</option>
+                        <option value="M">Orden de la Autoridad Competente</option>
+                        <option value="E">Aviso escrito firmado por el Suscriptor</option>
+                        <option value="N">Comprobante de Numeración</option>
+                        <option value="R">Documento de Recuperación (Comprobante de Cancelación)</option>
+                      </select>
+                    </div>
+                    <div class="col-md-7">
+                      <label for="formFileSmRecovery" class="form-label">Adjuntar Documento.</label>
+                      <input class="form-control" id="formFileSmRecovery" type="file" accept=".pdf,.jpg">
+                    </div>
+                    <div class="col-md-2">
+                      <label class="form-label">Tamaño:</label>
+                      <input class="form-control" type="text" placeholder="Default input" aria-label="default input example" id="docSizeFour" disabled>
                     </div>
                   </div>
                 </div>
@@ -512,7 +538,7 @@ if (isset($_SESSION['usuario'])) {
                     </div>
                     <div class="row">
                       <div class="col-md-8">
-                        <input type="file" class="form-control" id="excelFile">
+                        <input type="file" class="form-control" id="excelFile"  accept=".xlsx,.csv,.xls,.xlt,.xls,.xml,.txt">
                       </div>
                       <div class="col-md-4">
                         <button class="btn btn-primary" id="cleanTable">Limpiar Tabla</button>
@@ -1136,10 +1162,14 @@ if (isset($_SESSION['usuario'])) {
     btnAttachment.addEventListener('click', () => {
       let valor = document.querySelector('#nip').value;
       const attachDiv = document.querySelector('.mostrar-attach');
+      const attFormGroupRecov = document.getElementById('attachDocRecovery');
       if (valor == "Attachments") {
         attachDiv.style.display = "inline-block";
-      }else{
-        
+        if(document.getElementById("exampleRadios2").checked == true && document.getElementById("exampleRadios5").checked == true){
+          attFormGroupRecov.style.display = "flex";
+        } else {
+          attFormGroupRecov.style.display = "none";
+        }
       }
     });
 
@@ -1188,14 +1218,24 @@ if (isset($_SESSION['usuario'])) {
         document.getElementById("exampleRadios3").checked = false;
         conTableX.style.display = "none";
         excelFile.value = "";
+        if (document.getElementById("attachDocRecovery").style.display = "flex") {
+          document.getElementById("attachDocRecovery").style.display = "none";
+        }
       }
-      numeroFisica();
+      if (checkexampleRadios5.checked) {
+
+      } else {
+        numeroFisica();
+      }
     });
 
     checkexampleRadios2.addEventListener('click', () => {
       if (checkexampleRadios2.checked) {
         document.getElementById("exampleRadios1").checked = false;
         document.getElementById("exampleRadios3").checked = false;
+        if (checkexampleRadios5.checked) {
+          document.getElementById("attachDocRecovery").style.display = "flex";
+        }
       }
       numeroGobiernoMoral();
     });
@@ -1204,6 +1244,9 @@ if (isset($_SESSION['usuario'])) {
       if (checkexampleRadios3.checked) {
         document.getElementById("exampleRadios1").checked = false;
         document.getElementById("exampleRadios2").checked = false;
+        if (document.getElementById("attachDocRecovery").style.display = "flex") {
+          document.getElementById("attachDocRecovery").style.display = "none";
+        }
       }
       numeroGobiernoMoral();
     });
@@ -1211,6 +1254,9 @@ if (isset($_SESSION['usuario'])) {
     checkexampleRadios4.addEventListener('click', () => {
       if (checkexampleRadios4.checked) {
         document.getElementById("exampleRadios5").checked = false;
+        if (document.getElementById("attachDocRecovery").style.display = "flex") {
+          document.getElementById("attachDocRecovery").style.display = "none";
+        }
       }
       if (checkexampleRadios2.checked || checkexampleRadios3.checked) {
 
@@ -1223,6 +1269,9 @@ if (isset($_SESSION['usuario'])) {
     checkexampleRadios5.addEventListener('click', () => {
       if (checkexampleRadios5.checked) {
         document.getElementById("exampleRadios4").checked = false;
+        if (checkexampleRadios2.checked) {
+          document.getElementById("attachDocRecovery").style.display = "flex";
+        }
       }
       numeroGobiernoMoral();
       var moralGobierno = document.getElementById("listadoMoralGob");
