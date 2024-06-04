@@ -9,31 +9,29 @@ let fileSizeFour = 0;
 
 
 const sizeValidate = (file, identificador, docSelector)=>{
-    if(file.size > 4 * 1024 * 1024)
-    {
-        let id = document.getElementById(identificador);
-        id.value = '';
-        let idFile = id.files[0];
-
-        let fileName = idFile.name;
-        fileName = fileName.toLowerCase();
-        let fileSize = (idFile.size)/(1024*1024);
-        fileName = fileName.toLowerCase();
-        let selector = document.getElementById(docSelector)
-        if(selector.value == ""){
-            if(fileName.includes("id") || fileIdentifica.name.includes("ine") || fileIdentifica.name.includes("ife")){
-                selector.value = "I";
-            } else if(fileName.includes("comprobante") || fileName.includes("portabilidad")){
-                selector.value = "S";
-            } else if(fileName.includes("acta") || fileName.includes("poder") || fileName.includes("constitutiva") || fileName.includes("legal") || fileName.includes("notario")){
-                selector.value = "P";
-            } else if(fileName.includes("jurad") || fileName.includes("recupera")){
-                selector.value = "R";
-            } else {
-                selector.value = "O";
-            }
+    let id = document.getElementById(identificador);
+    let idFile = id.files[0];
+    let fileSize = (idFile.size)/(1024*1024);
+    let fileName = idFile.name;
+    fileName = fileName.toLowerCase().replaceAll(" ","_").replaceAll("-","_").replaceAll(".","_.");
+    let selector = document.getElementById(docSelector);
+    if(!selector.value){
+        if(fileName.includes("_id_") || fileName.includes("_ine_") || fileName.includes("_ife_")){
+            selector.value = "I";
+        } else if(fileName.includes("_comprobante_") || fileName.includes("_portabilidad_")){
+            selector.value = "S";
+        } else if(fileName.includes("_acta_") || fileName.includes("_poder_") || fileName.includes("_constitutiva_") || fileName.includes("_legal_") || fileName.includes("_notario_")){
+            selector.value = "P";
+        } else if(fileName.includes("_jurad_") || fileName.includes("_recupera_")){
+            selector.value = "R";
+        } else {
+            selector.value = "O";
         }
-
+    }
+    if(file.size > 4 * 1024 * 1024) {
+        id.value = '';
+        selector.style.borderColor = "red";
+        selector.style.borderWidth = "2px";
     	Swal.fire("Warning","Los archivos no pueden valer más de 4 Mega bytes de tamaño","warning");
         return;
     }
@@ -45,7 +43,6 @@ document.querySelector('#formFileSmIdentifica').addEventListener('change', ()=>{
         sizeValidate(fileIdentifica,"formFileSmIdentifica", "selectDocumentOne");
         fileSizeOne = (fileIdentifica.size)/(1024*1024);
         docSizeOne.value = fileSizeOne.toFixed(2) + " MB";
-        console.log(fileIdentifica);
     }
 });
 
@@ -55,9 +52,7 @@ document.querySelector('#formFileSmSolOriginal').addEventListener('change', ()=>
         sizeValidate(fileIdentifica,"formFileSmSolOriginal", "selectDocumentTwo");
         fileSizeTwo = (fileIdentifica.size)/(1024*1024);
         docSizeTwo.value = fileSizeTwo.toFixed(2) + " MB";
-        console.log(fileIdentifica);
     }
-
 });
 
 document.querySelector('#formFileSmJurada').addEventListener('change', ()=>{
@@ -66,9 +61,7 @@ document.querySelector('#formFileSmJurada').addEventListener('change', ()=>{
         sizeValidate(fileIdentifica,"formFileSmJurada", "selectDocumentThree");
         fileSizeThree = (fileIdentifica.size)/(1024*1024);
         docSizeThree.value = fileSizeThree.toFixed(2) + " MB";
-        console.log(fileIdentifica);
     }
-
 });
 
 document.querySelector('#formFileSmRecovery').addEventListener('change', ()=>{
@@ -77,7 +70,6 @@ document.querySelector('#formFileSmRecovery').addEventListener('change', ()=>{
         sizeValidate(fileIdentifica,"formFileSmRecovery", "selectDocumentFour");
         fileSizeThree = (fileIdentifica.size)/(1024*1024);
         docSizeThree.value = fileSizeThree.toFixed(2) + " MB";
-        console.log(fileIdentifica);
     }
 });
 

@@ -538,7 +538,8 @@ if (isset($_SESSION['usuario'])) {
                     </div>
                     <div class="row">
                       <div class="col-md-8">
-                        <input type="file" class="form-control" id="excelFile"  accept=".xlsx,.csv,.xls,.xlt,.xls,.xml,.txt">
+                        <input type="file" class="form-control" id="excelFile"  accept=".xlsx">
+                        <!-- ,.csv,.xls,.xml,.txt -->
                       </div>
                       <div class="col-md-4">
                         <button class="btn btn-primary" id="cleanTable">Limpiar Tabla</button>
