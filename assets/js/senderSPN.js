@@ -2,6 +2,7 @@ const btnEnviar = document.querySelector('#enviarApi');
 const docSizeOne = document.querySelector('#docSizeOne');
 const docSizeTwo = document.querySelector('#docSizeTwo');
 const docSizeThree = document.querySelector('#docSizeThree');
+const docSizeFour = document.querySelector('#docSizeFour');
 let fileSizeOne = 0;
 let fileSizeTwo = 0;
 let fileSizeThree = 0;
@@ -14,6 +15,10 @@ const sizeValidate = (file, identificador, docSelector)=>{
     let fileSize = (idFile.size)/(1024*1024);
     let fileName = idFile.name;
     fileName = fileName.toLowerCase().replaceAll(" ","_").replaceAll("-","_").replaceAll(".","_.");
+    fileName = fileName.replaceAll("á","a").replaceAll("é","e").replaceAll("í","i").replaceAll("ó","o").replaceAll("ú","u");
+    fileName = fileName.replaceAll("ñ","n").replaceAll("ü","u").replaceAll("ä","a").replaceAll("ë","e").replaceAll("ï","i");
+    fileName = "_" + fileName;
+    console.log(fileName);
     let selector = document.getElementById(docSelector);
     if(!selector.value){
         if(fileName.includes("_id_") || fileName.includes("_ine_") || fileName.includes("_ife_")){
@@ -22,7 +27,7 @@ const sizeValidate = (file, identificador, docSelector)=>{
             selector.value = "S";
         } else if(fileName.includes("_acta_") || fileName.includes("_poder_") || fileName.includes("_constitutiva_") || fileName.includes("_legal_") || fileName.includes("_notario_")){
             selector.value = "P";
-        } else if(fileName.includes("_jurad_") || fileName.includes("_recupera_")){
+        } else if(fileName.includes("_jurad") || fileName.includes("_recupera")){
             selector.value = "R";
         } else {
             selector.value = "O";
@@ -68,8 +73,8 @@ document.querySelector('#formFileSmRecovery').addEventListener('change', ()=>{
     let fileIdentifica = document.getElementById('formFileSmRecovery').files[0];
     if (fileIdentifica !== "") {
         sizeValidate(fileIdentifica,"formFileSmRecovery", "selectDocumentFour");
-        fileSizeThree = (fileIdentifica.size)/(1024*1024);
-        docSizeThree.value = fileSizeThree.toFixed(2) + " MB";
+        fileSizeFour = (fileIdentifica.size)/(1024*1024);
+        docSizeFour.value = fileSizeFour.toFixed(2) + " MB";
     }
 });
 

@@ -398,7 +398,7 @@ if (isset($_SESSION['usuario'])) {
                   <div class="d-flex align-items-center">
                     <p class="mb-0">Número(s) a Portar</p>
                   </div>
-                  <i class="text-secondary fs-6">Para números individuales el From y el To se deben llenar con el mismo número.</i>
+                  <i class="text-secondary fs-6">Para números individuales el <b>From</b> y el <b>To</b> se deben llenar con el mismo número.</i>
                   <div class="row">
                     <div class="col-md-4">
                       <label for="example-text-input" class="form-control-label">From:</label>
@@ -811,7 +811,7 @@ if (isset($_SESSION['usuario'])) {
               <div class="col-md-12">
                 <div class="d-flex align-items-center">
                   <p class="mb-0">Número (s) a Portar</p>
-                </div><span style="font-size: 10px;">Para números individuales el From y el To se deben llenar con el
+                </div><span style="font-size: 10px;">Para números individuales el <b>From</b> y el <b>To</b> se deben llenar con el
                   mismo número.</span>
                 <div class="row">
                   <div class="col-md-6">
