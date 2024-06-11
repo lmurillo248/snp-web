@@ -23,9 +23,16 @@ try {
 
     $stidX = oci_parse($conn, "SELECT PORTID,PORTEXECDATE,REQPORTEXECDATE
                                 FROM SPN_MSJ_1006  WHERE PORTID = :idPort");
+    // $stidX = oci_parse($conn, "SELECT *
+    //                     FROM SPN_MSJ
+    //                     WHERE PORTID = :idPort
+    //                     AND MESSAGEID IN ('1001', '1002', '1005', '1006', '1007')
+    //                     AND MESSAGEID NOT IN ('1091', '1092', '3001', '3002');
+    //                     ORDER BY ID DESC");
     oci_bind_by_name($stidX, ":idPort", $idPort);
     oci_execute($stidX);
 
+    // Devuelve el número de filas recuperadas por la sentencia SQL ($stidX)
     $countX = oci_fetch_all($stidX, $resultSet, 0, -1, OCI_FETCHSTATEMENT_BY_ROW);
 
     if ($countX > 0) {
@@ -48,20 +55,156 @@ try {
             $portType = $xmlmsgAux->NPCMessage->PortToBeScheduled[0]->PortType ;
             $SubscriberType = $xmlmsgAux->NPCMessage->PortToBeScheduled[0]->SubscriberType ;
             $RecoveryFlagType = $xmlmsgAux->NPCMessage->PortToBeScheduled[0]->RecoveryFlagType ;
-            $DIDA = $xmlmsgAux->NPCMessage->PortToBeScheduled[0]->DIDA ;
-            $DCR = $xmlmsgAux->NPCMessage->PortToBeScheduled[0]->DCR ;
             $TotalPhoneNums = $xmlmsgAux->NPCMessage->PortToBeScheduled[0]->TotalPhoneNums ;
-
+            
             foreach ($xmlmsgAux->NPCMessage->PortToBeScheduled[0]->Numbers[0]->NumberRange as $item) {
                 $numberRange .= "<NumberRange>\n<NumberFrom>".$item->NumberFrom."</NumberFrom>\n"."<NumberTo>".$item->NumberTo."</NumberTo>\n</NumberRange>\n";
-                
             }
+                
+                
+            #close connection
+            oci_close($conn);
+                
+            if($xmlmsgAux->NPCMessage->PortToBeScheduled[0]->DCR){
+                $DIDA = $xmlmsgAux->NPCMessage->PortToBeScheduled[0]->DIDA ;
+                $DCR = $xmlmsgAux->NPCMessage->PortToBeScheduled[0]->DCR ;
+                $xml = "<NPCData>\n" .
+                        "<MessageHeader>\n" .
+                            "<TransTimestamp>".$TransTimestamp."</TransTimestamp>\n" .
+                            "<Sender>".$ido."</Sender>\n" .
+                            "<NumOfMessages>1</NumOfMessages>\n" .
+                        "</MessageHeader>\n" .
+                        "<NPCMessage MessageID='".trim($MessageID)."'>\n" .
+                            "<PortCancellationRequest>\n" .
+                                "<PortType>".$portType."</PortType>\n" .
+                                "<SubscriberType>".$SubscriberType."</SubscriberType>\n" .
+                                "<RecoveryFlagType>".$RecoveryFlagType."</RecoveryFlagType>\n" .
+                                "<PortID>".$idPort."</PortID>\n" .
+                                "<Timestamp>".$TransTimestamp."</Timestamp>\n" .
+                                "<DIDA>".$DIDA."</DIDA>\n" .
+                                "<DCR>".$DCR."</DCR>\n" .
+                                "<RIDA>".$ido."</RIDA>\n" .
+                                "<RCR>".$ido."</RCR>\n" .
+                                "<TotalPhoneNums>".$TotalPhoneNums."</TotalPhoneNums>\n" .
+                                    "<Numbers>\n" .
+                                        $numberRange .
+                                    "</Numbers>\n" .
+                                #"<PortExecDate>".date("Ymd"."020000", strtotime($txtdate))."</PortExecDate>\n" .
+                                #"<ReqPortExecDate>".date("YmdHis", strtotime($txtdate))."</ReqPortExecDate>\n" .
+                            "</PortCancellationRequest>\n" .
+                        "</NPCMessage>\n" .
+                    "</NPCData>
+                ";
+            } else {
+                $RIDA = $xmlmsgAux->NPCMessage->PortToBeScheduled[0]->RIDA ;
+                $RCR = $xmlmsgAux->NPCMessage->PortToBeScheduled[0]->RCR ;
+                $xml = "<NPCData>\n" .
+                        "<MessageHeader>\n" .
+                            "<TransTimestamp>".$TransTimestamp."</TransTimestamp>\n" .
+                            "<Sender>".$ido."</Sender>\n" .
+                            "<NumOfMessages>1</NumOfMessages>\n" .
+                        "</MessageHeader>\n" .
+                        "<NPCMessage MessageID='".trim($MessageID)."'>\n" .
+                            "<PortCancellationRequest>\n" .
+                                "<PortType>".$portType."</PortType>\n" .
+                                "<SubscriberType>".$SubscriberType."</SubscriberType>\n" .
+                                "<RecoveryFlagType>".$RecoveryFlagType."</RecoveryFlagType>\n" .
+                                "<PortID>".$idPort."</PortID>\n" .
+                                "<Timestamp>".$TransTimestamp."</Timestamp>\n" .
+                                "<DIDA>".$ido."</DIDA>\n" .
+                                "<DCR>".$ido."</DCR>\n" .
+                                "<RIDA>".$RIDA."</RIDA>\n" .
+                                "<RCR>".$RCR."</RCR>\n" .
+                                "<TotalPhoneNums>".$TotalPhoneNums."</TotalPhoneNums>\n" .
+                                    "<Numbers>\n" .
+                                        $numberRange .
+                                    "</Numbers>\n" .
+                                #"<PortExecDate>".date("Ymd"."020000", strtotime($txtdate))."</PortExecDate>\n" .
+                                #"<ReqPortExecDate>".date("YmdHis", strtotime($txtdate))."</ReqPortExecDate>\n" .
+                            "</PortCancellationRequest>\n" .
+                        "</NPCMessage>\n" .
+                    "</NPCData>
+                ";
+            }
+        
+            // $location = "http://172.21.141.123:7001/spn/spnService?WSDL";
+            $location = "http://172.28.108.181:7001/spn/spnService?WSDL";
+                
+            $request = '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:spn="https://bmartinezc:7001/spnService">
+                            <soapenv:Header/>
+                                <soapenv:Body>
+                                    <spn:Mensaje>' . 
+                                        htmlentities($xml) . 
+                                    '</spn:Mensaje>
+                                </soapenv:Body>
+                            </soapenv:Envelope>';
 
+            #$action = "guardarOrdenDeCompra";
+            $headers = [
+                'Method: POST',
+                'Connection: Keep-Alive',
+                'User-Agent: PHP-SOAP-CURL',
+                'Content-Type: text/xml; charset=utf-8',
+                #'SOAPAction: "guardarOrdenDeCompra"',
+            ];
+
+            $ch = curl_init($location);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $request);
+            curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+            //tipo de autorización
+            //curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_NTLM);//NTLM para webservices con dominios de windows
+            //curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);//AUTH BASIC para este caso
+            //curl_setopt($ch, CURLOPT_USERPWD, 'lucio:lucio'); //usuario:contraseña
+
+            $response = curl_exec($ch); 
+        }else{
+            $xmlmsg = "Error PortID";
+        }
+    } else {
+        $stid = oci_parse($conn, "SELECT ID, FECHA, SENDER, PORTID, PORTID_AUX, NOTA, MESSAGEID, ACUSE, XMLMSG
+                                FROM SPN_MSJ 
+                                WHERE PORTID = :idPort
+                                AND MESSAGEID = (SELECT MAX(MESSAGEID) FROM SPN_MSJ WHERE PORTID = :idPort)
+                                AND XMLMSG LIKE '%<?xml%'
+                                ");
+                                        
+        oci_bind_by_name($stid, ":idPort", $idPort);
+        oci_execute($stid);
+
+        while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
+            $xmlmsg = $row['XMLMSG'];
+            // $countX = intval($row['MESSAGEID']);
+        }
+
+        if ($xmlmsg !== "") {
+            // Devuelve el número de filas recuperadas por la sentencia SQL ($stidX)
+            $countX = oci_fetch_all($stid, $resultSet, 0, -1, OCI_FETCHSTATEMENT_BY_ROW);
+            
+            $xmlmsgAux = simplexml_load_string($xmlmsg); #new SimpleXMLElement($xmlmsg);
+            
+            $portType = $xmlmsgAux->NPCMessage->PortRequest->PortType;
+            $SubscriberType = $xmlmsgAux->NPCMessage->PortRequest->SubscriberType;
+            $RecoveryFlagType = $xmlmsgAux->NPCMessage->PortRequest->RecoveryFlagType;
+            $TotalPhoneNums = $xmlmsgAux->NPCMessage->PortRequest->TotalPhoneNums;
+            // $xml = $xmlmsgAux;
+            
+            // $DIDA = $xmlmsgAux->NPCMessage->PortToBeScheduled[0]->DIDA ;
+            // $DCR = $xmlmsgAux->NPCMessage->PortToBeScheduled[0]->DCR ;
+
+            foreach ($xmlmsgAux->NPCMessage->PortRequest->Numbers->NumberRange as $item) {
+                $numberRange .= "<NumberRange>\n<NumberFrom>".$item->NumberFrom."</NumberFrom>\n"."<NumberTo>".$item->NumberTo."</NumberTo>\n</NumberRange>\n";
+            }
 
             #close connection
             oci_close($conn);
-    
-            $xml = "<NPCData>\n" .
+
+            if($xmlmsgAux->NPCMessage->PortRequest->DCR){
+                $DIDA = $xmlmsgAux->NPCMessage->PortRequest->DIDA;
+                $DCR = $xmlmsgAux->NPCMessage->PortRequest->DCR;
+                $xml = "<NPCData>\n" .
                     "<MessageHeader>\n" .
                         "<TransTimestamp>".$TransTimestamp."</TransTimestamp>\n" .
                         "<Sender>".$ido."</Sender>\n" .
@@ -88,7 +231,38 @@ try {
                     "</NPCMessage>\n" .
                 "</NPCData>
             ";
-        
+            } else {
+                $RIDA = $xmlmsgAux->NPCMessage->PortRequest->RIDA;
+                $RCR = $xmlmsgAux->NPCMessage->PortRequest->RCR;
+                $xml = "<NPCData>\n" .
+                        "<MessageHeader>\n" .
+                            "<TransTimestamp>".$TransTimestamp."</TransTimestamp>\n" .
+                            "<Sender>".$ido."</Sender>\n" .
+                            "<NumOfMessages>1</NumOfMessages>\n" .
+                        "</MessageHeader>\n" .
+                        "<NPCMessage MessageID='".trim($MessageID)."'>\n" .
+                            "<PortCancellationRequest>\n" .
+                                "<PortType>".$portType."</PortType>\n" .
+                                "<SubscriberType>".$SubscriberType."</SubscriberType>\n" .
+                                "<RecoveryFlagType>".$RecoveryFlagType."</RecoveryFlagType>\n" .
+                                "<PortID>".$idPort."</PortID>\n" .
+                                "<Timestamp>".$TransTimestamp."</Timestamp>\n" .
+                                "<DIDA>".$ido."</DIDA>\n" .
+                                "<DCR>".$ido."</DCR>\n" .
+                                "<RIDA>".$RIDA."</RIDA>\n" .
+                                "<RCR>".$RCR."</RCR>\n" .
+                                "<TotalPhoneNums>".$TotalPhoneNums."</TotalPhoneNums>\n" .
+                                    "<Numbers>\n" .
+                                        $numberRange .
+                                    "</Numbers>\n" .
+                                #"<PortExecDate>".date("Ymd"."020000", strtotime($txtdate))."</PortExecDate>\n" .
+                                #"<ReqPortExecDate>".date("YmdHis", strtotime($txtdate))."</ReqPortExecDate>\n" .
+                            "</PortCancellationRequest>\n" .
+                        "</NPCMessage>\n" .
+                    "</NPCData>
+                ";
+            }
+            
             // $location = "http://172.21.141.123:7001/spn/spnService?WSDL";
             $location = "http://172.28.108.181:7001/spn/spnService?WSDL";
                 

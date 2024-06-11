@@ -14,9 +14,9 @@ const sizeValidate = (file, identificador, docSelector)=>{
     let idFile = id.files[0];
     let fileSize = (idFile.size)/(1024*1024);
     let fileName = idFile.name;
-    fileName = fileName.toLowerCase().replaceAll(" ","_").replaceAll("-","_").replaceAll(".","_.");
-    fileName = fileName.replaceAll("á","a").replaceAll("é","e").replaceAll("í","i").replaceAll("ó","o").replaceAll("ú","u");
-    fileName = fileName.replaceAll("ñ","n").replaceAll("ü","u").replaceAll("ä","a").replaceAll("ë","e").replaceAll("ï","i");
+    fileName = fileName.toLowerCase().replaceAll(" ","_").replaceAll("-","_").replaceAll(".","_.")
+                .replaceAll("á","a").replaceAll("é","e").replaceAll("í","i").replaceAll("ó","o")
+                .replaceAll("ú","u").replaceAll("ñ","n").replaceAll("ü","u");
     fileName = "_" + fileName;
     console.log(fileName);
     let selector = document.getElementById(docSelector);

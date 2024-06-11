@@ -125,11 +125,13 @@ document.querySelector('#btnIdPortDelete').addEventListener('click', async ()=>{
         data.append("fechaTimeStamp",fechaTimeStamp);
         
         ProcessConsulta(data,"../php/sender3001.php").then(res =>{
+            console.log(res);
             swal.close();
             if (res === false || res.response === false) {
                 return Swal.fire("Warning","Error al enviar el mensaje, vuelva a intentarlo","warning");
             }else{
-                if (res.countX == 0 || res.xmlmsg == "Error PortID") {
+                // if (res.countX == 0 || res.xmlmsg == "Error PortID") {
+                if (res.xmlmsg == "Error PortID") {
                     return Swal.fire("Warning","No se encontró el PortID que desea cancelar","warning");
                 }
                 if (res.msg !== 'Execution Error') {
