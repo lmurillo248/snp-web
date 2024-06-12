@@ -42,7 +42,6 @@ class ExcelPrinter{
         /* excel.header().forEach(title => {
             table.querySelector("thead>tr").innerHTML += `<td>${title}</td>`
         }); */
-        console.log(table);
         table.querySelector('tbody').innerHTML = "";
 
         for (let index = 0; index < excel.rows().count(); index++) {
@@ -52,6 +51,9 @@ class ExcelPrinter{
                     <td>${row.Telefonos()}</td>
                 </tr>
             `
+            console.log(excel.rows().get(index).Telefonos());
+            console.log(excel.rows().get(index));
+            console.log(excel.rows().get(index));
         }
     }
 }
@@ -94,6 +96,7 @@ const $btnLimpiarE = document.querySelector("#cleanTableEliminacion");
 // Y en el click, limpiamos
 $btnLimpiar.addEventListener("click", () => {
     clearTable($elemento, "excelFile");
+    tablaY.style.display = "none";
 });
 
 $btnLimpiarE.addEventListener("click", () => {
@@ -107,7 +110,6 @@ function clearTable(tabla, idComponente){
 }
 
 $numeroPara.addEventListener("change", () => {
-    
     if (document.getElementById('numeroFrom').value != "") {
         $elemento.innerHTML = "";
         document.getElementById('excelFile').value = "";
@@ -115,8 +117,6 @@ $numeroPara.addEventListener("change", () => {
     } else if (document.getElementById('numeroFrom').value = ""){
         const excel = new PortabilidadExcel(content);
     }
-    
-
 });
 
 

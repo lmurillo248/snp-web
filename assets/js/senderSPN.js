@@ -370,6 +370,7 @@ btnEnviar.addEventListener('click', async ()=>{
                     document.querySelector('#exampleRadios1').checked = true;
                     document.querySelector('#exampleRadios4').checked = true;
                     document.querySelector('#exampleRadios5').checked = false;
+                    document.querySelector('#conTable').style.display = "none";
                     numeroFisica();
                     btnEnviar.disabled = false;
                 }
