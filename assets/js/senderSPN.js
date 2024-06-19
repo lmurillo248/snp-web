@@ -12,7 +12,7 @@ let fileSizeFour = 0;
 const sizeValidate = (file, identificador, docSelector)=>{
     let id = document.getElementById(identificador);
     let idFile = id.files[0];
-    let fileSize = (idFile.size)/(1024*1024);
+    // let fileSize = (idFile.size)/(1024*1024);
     let fileName = idFile.name;
     fileName = fileName.toLowerCase().replaceAll(" ","_").replaceAll("-","_").replaceAll(".","_.")
                 .replaceAll("á","a").replaceAll("é","e").replaceAll("í","i").replaceAll("ó","o")
@@ -96,6 +96,7 @@ btnEnviar.addEventListener('click', async ()=>{
     
     let flagRadio = 0;
     let activoDesconectado = "";
+    let personaMoral = "";
 
     //validación para que los controles estén llenos
     if (document.getElementById('excelFile').value !== "") {
@@ -255,12 +256,18 @@ btnEnviar.addEventListener('click', async ()=>{
     data.append("comentarios", comentarios);
     data.append("fechaTimeStamp",fechaTimeStamp);
 
+    if (radio2moral.checked) {
+        personaMoral = "Y";
+    }else{
+        personaMoral = "N";
+    }
+    data.append("personaMoral",personaMoral);
+
     if (radio4activo.checked) {
         activoDesconectado = "N";
     }else{
         activoDesconectado = "Y";
     }
-    
     data.append("activoDesconectado",activoDesconectado);
     
     //validación para el envío de la data

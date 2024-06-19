@@ -6,6 +6,7 @@ $PortType = $_POST['PortType'];
 $ido = $_POST['ido'];
 $TransTimestamp = $_POST['TransTimestamp'];
 $activoDesconectado = $_POST['activoDesconectado'];
+$personaMoral = $_POST['personaMoral'];
 $numTel = $_POST['numTel'];
 $numTo = $_POST['numTo'];
 $numNip = $_POST['numNip'];
@@ -50,12 +51,18 @@ if ($numTel != "" && $numTo != "" && $numNip != "Attachments") {
 	$formFileSmIdentifica = $_FILES['formFileSmIdentifica']['tmp_name'];
 	$formFileSmSolOriginal = $_FILES['formFileSmSolOriginal']['tmp_name'];
 	$formFileSmJurada = $_FILES['formFileSmJurada']['tmp_name'];
+	$formFileSmRecovery = $_FILES['formFileSmRecovery']['tmp_name'];
 
 	#variables de los nombres de los adjuntos--------------------------
 	$selectDocumentOne = $_POST['selectDocumentOne'];
 	$selectDocumentTwo = $_POST['selectDocumentTwo'];
 	$selectDocumentThree = $_POST['selectDocumentThree'];
-	$numFiles = 3;
+	$selectDocumentFour = $_POST['selectDocumentFour'];
+	if($personaMoral=='Y' && $activoDesconectado=='Y'){
+		$numFiles = 4;
+	}else{
+		$numFiles = 3;
+	}
 
 	#move_uploaded_file($_FILES["formFileSmIdentifica"]["tmp_name"], $_FILES["formFileSmIdentifica"]["name"]);
 	#$bin_identifica = file_get_contents($_FILES["formFileSmIdentifica"]["name"]);
@@ -88,14 +95,27 @@ if ($numTel != "" && $numTo != "" && $numNip != "Attachments") {
 	#$bin_juarada = file_get_contents($_FILES["formFileSmJurada"]["name"]);*/
 
 	$formFileSmJuradaExt = fileSaver("formFileSmJurada",$portid.$MessageID."-".$selectDocumentThree);
-		
+	
+	$formFileSmRecoveryExt = fileSaver("formFileSmRecovery",$portid.$MessageID."-".$selectDocumentFour);
+
+
 	#estos son los nombres de los archivos.
-	$nombreAttach = "<NumOfFiles>$numFiles</NumOfFiles>\n" .
-					"<AttachedFiles>\n" .            
-						"<FileName>".$portid.$MessageID."-".$selectDocumentOne.".".$formFileSmIdentificaExt."</FileName>\n" . 
-						"<FileName>".$portid.$MessageID."-".$selectDocumentTwo.".".$formFileSmSolOriginalExt."</FileName>\n" . 
-						"<FileName>".$portid.$MessageID."-".$selectDocumentThree.".".$formFileSmJuradaExt."</FileName>\n" .
-					"</AttachedFiles>\n";
+	if($personaMoral=='Y' && $activoDesconectado=='Y'){
+		$nombreAttach = "<NumOfFiles>$numFiles</NumOfFiles>\n" .
+						"<AttachedFiles>\n" .            
+							"<FileName>".$portid.$MessageID."-".$selectDocumentOne.".".$formFileSmIdentificaExt."</FileName>\n" . 
+							"<FileName>".$portid.$MessageID."-".$selectDocumentTwo.".".$formFileSmSolOriginalExt."</FileName>\n" . 
+							"<FileName>".$portid.$MessageID."-".$selectDocumentThree.".".$formFileSmJuradaExt."</FileName>\n" .
+							"<FileName>".$portid.$MessageID."-".$selectDocumentFour.".".$formFileSmRecoveryExt."</FileName>\n" .
+						"</AttachedFiles>\n";
+	}else{
+		$nombreAttach = "<NumOfFiles>$numFiles</NumOfFiles>\n" .
+						"<AttachedFiles>\n" .            
+							"<FileName>".$portid.$MessageID."-".$selectDocumentOne.".".$formFileSmIdentificaExt."</FileName>\n" . 
+							"<FileName>".$portid.$MessageID."-".$selectDocumentTwo.".".$formFileSmSolOriginalExt."</FileName>\n" . 
+							"<FileName>".$portid.$MessageID."-".$selectDocumentThree.".".$formFileSmJuradaExt."</FileName>\n" .
+						"</AttachedFiles>\n";
+	}
 			
 	if($numTel != "" && $numTo != "" && $numNip == "Attachments"){
 		

@@ -26962,7 +26962,8 @@ pre[class*="language-"] {
 }
 .conTableY{
   display: none;
-  height: 300px;
+  height: min-content;
+  max-height: 300px;
   overflow-y: scroll;
 }
 .conTableY::-webkit-scrollbar {
@@ -26980,7 +26981,8 @@ pre[class*="language-"] {
 }
 .conTableYE{
   display: none;
-  height: 300px;
+  height: min-content;
+  max-height: 300px;
   overflow-y: scroll;
 }
 .conTableYE::-webkit-scrollbar {

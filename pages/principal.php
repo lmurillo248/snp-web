@@ -422,16 +422,16 @@ if (isset($_SESSION['usuario'])) {
                     </div>
                   </div>
                 </div>
-                <div class="mb-3 mostrar-attach" id="attachDocNoNip">
+                <div class="mb-3 mostrar-attach w-100" id="attachDocNoNip">
                   <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-3" hidden>
                       <label for="formFileSm" class="form-label">Tipo de documento:</label>
                       <select class="form-select" aria-label="Default select example" name="" id="selectDocumentOne">
                         <option value="">-Seleccionar-</option>
                         <option value="S">Formulario de Solicitud de Portación</option>
                         <option value="F">Factura</option>
                         <option value="C">Contrato</option>
-                        <option value="I">ID</option>
+                        <option value="I" selected>ID</option>
                         <option value="O">Otro</option>
                         <option value="P">Poder</option>
                         <option value="M">Orden de la Autoridad Competente</option>
@@ -440,21 +440,21 @@ if (isset($_SESSION['usuario'])) {
                         <option value="R">Documento de Recuperación (Comprobante de Cancelación)</option>
                       </select>
                     </div>
-                    <div class="col-md-7">
+                    <div class="col-md-9">
                       <label for="formFileSm" class="form-label">Adjuntar Documento:</label>
                       <input class="form-control" id="formFileSmIdentifica" type="file" accept=".pdf,.jpg">
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                       <label class="form-label">Tamaño:</label>
                       <input class="form-control" type="text" placeholder="Default input" aria-label="default input example" id="docSizeOne" disabled>
                     </div>
                   </div>
                   <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-3" hidden>
                       <label for="formFileSm" class="form-label">Tipo de documento.</label>
                       <select class="form-select" aria-label="Default select example" name="" id="selectDocumentTwo">
                         <option value="">-Seleccionar-</option>
-                        <option value="S">Formulario de Solicitud de Portación</option>
+                        <option value="S" selected>Formulario de Solicitud de Portación</option>
                         <option value="F">Factura</option>
                         <option value="C">Contrato</option>
                         <option value="I">ID</option>
@@ -466,17 +466,17 @@ if (isset($_SESSION['usuario'])) {
                         <option value="R">Documento de Recuperación (Comprobante de Cancelación)</option>
                       </select>
                     </div>
-                    <div class="col-md-7">
+                    <div class="col-md-9">
                       <label for="formFileSm" class="form-label">Adjuntar Documento.</label>
                       <input class="form-control" id="formFileSmSolOriginal" type="file" accept=".pdf,.jpg">
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                       <label class="form-label">Tamaño:</label>
                       <input class="form-control" type="text" placeholder="Default input" aria-label="default input example" id="docSizeTwo" disabled>
                     </div>
                   </div>
                   <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-3" hidden>
                       <label for="formFileSm" class="form-label">Tipo de documento.</label>
                       <select class="form-select" aria-label="Default select example" name="" id="selectDocumentThree">
                         <option value="">-Seleccionar-</option>
@@ -485,24 +485,24 @@ if (isset($_SESSION['usuario'])) {
                         <option value="C">Contrato</option>
                         <option value="I">ID</option>
                         <option value="O">Otro</option>
-                        <option value="P">Poder</option>
+                        <option value="P" selected>Poder</option>
                         <option value="M">Orden de la Autoridad Competente</option>
                         <option value="E">Aviso escrito firmado por el Suscriptor</option>
                         <option value="N">Comprobante de Numeración</option>
                         <option value="R">Documento de Recuperación (Comprobante de Cancelación)</option>
                       </select>
                     </div>
-                    <div class="col-md-7">
+                    <div class="col-md-9">
                       <label for="formFileSm" class="form-label">Adjuntar Documento.</label>
                       <input class="form-control" id="formFileSmJurada" type="file" accept=".pdf,.jpg">
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                       <label class="form-label">Tamaño:</label>
                       <input class="form-control" type="text" placeholder="Default input" aria-label="default input example" id="docSizeThree" disabled>
                     </div>
                   </div>
                   <div class="row" id="attachDocRecovery" style="none">
-                    <div class="col-md-3">
+                    <div class="col-md-3" hidden>
                       <label for="formFileSmRecovery" class="form-label">Tipo de documento.</label>
                       <select class="form-select" aria-label="Default select example" name="" id="selectDocumentFour">
                         <option value="">-Seleccionar-</option>
@@ -515,14 +515,14 @@ if (isset($_SESSION['usuario'])) {
                         <option value="M">Orden de la Autoridad Competente</option>
                         <option value="E">Aviso escrito firmado por el Suscriptor</option>
                         <option value="N">Comprobante de Numeración</option>
-                        <option value="R">Documento de Recuperación (Comprobante de Cancelación)</option>
+                        <option value="R" Selected>Documento de Recuperación (Comprobante de Cancelación)</option>
                       </select>
                     </div>
-                    <div class="col-md-7">
+                    <div class="col-md-9">
                       <label for="formFileSmRecovery" class="form-label">Adjuntar Documento.</label>
                       <input class="form-control" id="formFileSmRecovery" type="file" accept=".pdf,.jpg">
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                       <label class="form-label">Tamaño:</label>
                       <input class="form-control" type="text" placeholder="Default input" aria-label="default input example" id="docSizeFour" disabled>
                     </div>
@@ -1163,13 +1163,17 @@ if (isset($_SESSION['usuario'])) {
     btnAttachment.addEventListener('click', () => {
       let valor = document.querySelector('#nip').value;
       const attachDiv = document.querySelector('.mostrar-attach');
-      const attFormGroupRecov = document.getElementById('attachDocRecovery');
+      const attFormGroupRecov = document.querySelector('#attachDocRecovery');
+      const formFileGroupRecov = document.querySelector('#formFileSmRecovery');
+      const docSizeGroupRecov = document.querySelector('#docSizeFour');
       if (valor == "Attachments") {
         attachDiv.style.display = "inline-block";
         if(document.getElementById("exampleRadios2").checked == true && document.getElementById("exampleRadios5").checked == true){
           attFormGroupRecov.style.display = "flex";
         } else {
           attFormGroupRecov.style.display = "none";
+          formFileGroupRecov.value = "";
+          docSizeGroupRecov.value = "";
         }
       }
     });
@@ -1221,6 +1225,8 @@ if (isset($_SESSION['usuario'])) {
         excelFile.value = "";
         if (document.getElementById("attachDocRecovery").style.display = "flex") {
           document.getElementById("attachDocRecovery").style.display = "none";
+          document.getElementById("formFileSmRecovery").value = "";
+          document.getElementById("docSizeFour").value = "";
         }
       }
       if (checkexampleRadios5.checked) {
@@ -1247,6 +1253,8 @@ if (isset($_SESSION['usuario'])) {
         document.getElementById("exampleRadios2").checked = false;
         if (document.getElementById("attachDocRecovery").style.display = "flex") {
           document.getElementById("attachDocRecovery").style.display = "none";
+          document.getElementById("formFileSmRecovery").value = "";
+          document.getElementById("docSizeFour").value = "";
         }
       }
       numeroGobiernoMoral();
@@ -1257,6 +1265,8 @@ if (isset($_SESSION['usuario'])) {
         document.getElementById("exampleRadios5").checked = false;
         if (document.getElementById("attachDocRecovery").style.display = "flex") {
           document.getElementById("attachDocRecovery").style.display = "none";
+          document.getElementById("formFileSmRecovery").value = "";
+          document.getElementById("docSizeFour").value = "";
         }
       }
       if (checkexampleRadios2.checked || checkexampleRadios3.checked) {
