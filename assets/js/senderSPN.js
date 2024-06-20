@@ -35,8 +35,8 @@ const sizeValidate = (file, identificador, docSelector)=>{
     }
     if(file.size > 4 * 1024 * 1024) {
         id.value = '';
-        selector.style.borderColor = "red";
-        selector.style.borderWidth = "2px";
+        // selector.style.borderColor = "red";
+        // selector.style.borderWidth = "2px";
     	Swal.fire("Warning","Los archivos no pueden valer más de 4 Mega bytes de tamaño","warning");
         return;
     }
@@ -364,6 +364,10 @@ btnEnviar.addEventListener('click', async ()=>{
                     document.getElementById('numeroTo').value = "";
                     document.getElementById('nip').value = "";
                     document.getElementById('comentarios').value = "";
+                    document.getElementById('docSizeOne').value = "";
+                    document.getElementById('docSizeTwo').value = "";
+                    document.getElementById('docSizeThree').value = "";
+                    document.getElementById('docSizeFour').value = "";
                     document.getElementById('selectDocumentOne').value = "";
                     document.getElementById('selectDocumentTwo').value = "";
                     document.getElementById('selectDocumentThree').value = "";

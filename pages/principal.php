@@ -1022,8 +1022,8 @@ if (isset($_SESSION['usuario'])) {
     dateTimeZone();
 
     flatpickr("#txtdate", {
-      minDate: "today",
-      maxDate: new Date().fp_incr(5), // 14 days from now
+      minDate: new Date().fp_incr(1), // change "today" to tomorrow
+      maxDate: new Date().fp_incr(5), // 5 days from now
       "disable": [
         function (date) {
           // return true to disable
@@ -1037,8 +1037,8 @@ if (isset($_SESSION['usuario'])) {
     });
 
     flatpickr("#txtdateRevert", {
-      minDate: "today",
-      maxDate: new Date().fp_incr(5), // 14 days from now
+      minDate: new Date().fp_incr(1), // change "today" to tomorrow
+      maxDate: new Date().fp_incr(5), // 5 days from now
       "disable": [
         function (date) {
           // return true to disable

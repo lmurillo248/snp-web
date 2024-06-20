@@ -40,13 +40,13 @@ try {
                 </div>
             </td>
             <td style='width:50%'>
-                <div class='d-flex px-2 py-1'>
+                <div class='d-flex px-2 py-1 text-break'>
                     <div class='d-flex flex-column justify-content-center'> ACUSE: " . $row['ACUSE'] . 
                     "</div>
                 </div>
             </td>
             <td style='width:50%'>
-                <div class='d-flex px-2 py-1' style='width:50%'>
+                <div class='d-flex px-2 py-1 text-break'>
                     <div class='d-flex flex-column justify-content-center'> RESPUESTA: " . $row['XMLMSG'] . 
                     "</div>
                 </div>
