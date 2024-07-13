@@ -11,70 +11,70 @@ let fileSizeFour = 0;
 
 const sizeValidate = (file, identificador, docSelector)=>{
     let id = document.getElementById(identificador);
-    let idFile = id.files[0];
     // let fileSize = (idFile.size)/(1024*1024);
-    let fileName = idFile.name;
-    fileName = fileName.toLowerCase().replaceAll(" ","_").replaceAll("-","_").replaceAll(".","_.")
-                .replaceAll("á","a").replaceAll("é","e").replaceAll("í","i").replaceAll("ó","o")
-                .replaceAll("ú","u").replaceAll("ñ","n").replaceAll("ü","u");
-    fileName = "_" + fileName;
-    console.log(fileName);
-    let selector = document.getElementById(docSelector);
-    if(!selector.value){
-        if(fileName.includes("_id_") || fileName.includes("_ine_") || fileName.includes("_ife_")){
-            selector.value = "I";
-        } else if(fileName.includes("_comprobante_") || fileName.includes("_portabilidad_")){
-            selector.value = "S";
-        } else if(fileName.includes("_acta_") || fileName.includes("_poder_") || fileName.includes("_constitutiva_") || fileName.includes("_legal_") || fileName.includes("_notario_")){
-            selector.value = "P";
-        } else if(fileName.includes("_jurad") || fileName.includes("_recupera")){
-            selector.value = "R";
-        } else {
-            selector.value = "O";
-        }
-    }
+    console.log(file.size);
     if(file.size > 4 * 1024 * 1024) {
         id.value = '';
-        // selector.style.borderColor = "red";
-        // selector.style.borderWidth = "2px";
     	Swal.fire("Warning","Los archivos no pueden valer más de 4 Mega bytes de tamaño","warning");
-        return;
+        return false;
+    } else {
+        return true;
     }
 }
 
 document.querySelector('#formFileSmIdentifica').addEventListener('change', ()=>{
     let fileIdentifica = document.getElementById('formFileSmIdentifica').files[0];
-    if (fileIdentifica !== "") {
-        sizeValidate(fileIdentifica,"formFileSmIdentifica", "selectDocumentOne");
-        fileSizeOne = (fileIdentifica.size)/(1024*1024);
-        docSizeOne.value = fileSizeOne.toFixed(2) + " MB";
+    if (document.getElementById('formFileSmIdentifica').value !== "") {
+        let correctSize = sizeValidate(fileIdentifica,"formFileSmIdentifica", "selectDocumentOne");
+        if(correctSize) {
+            fileSizeOne = (fileIdentifica.size)/(1024*1024);
+            docSizeOne.value = `${fileSizeOne.toFixed(2)} MB`;
+        } else {
+            docSizeOne.value = "";
+            fileSizeOne = 0;
+        }
     }
 });
 
 document.querySelector('#formFileSmSolOriginal').addEventListener('change', ()=>{
     let fileIdentifica = document.getElementById('formFileSmSolOriginal').files[0];
-    if (fileIdentifica !== "") {
-        sizeValidate(fileIdentifica,"formFileSmSolOriginal", "selectDocumentTwo");
-        fileSizeTwo = (fileIdentifica.size)/(1024*1024);
-        docSizeTwo.value = fileSizeTwo.toFixed(2) + " MB";
+    if (document.getElementById('formFileSmSolOriginal').value !== "") {
+        let correctSize = sizeValidate(fileIdentifica,"formFileSmSolOriginal", "selectDocumentTwo");
+        if(correctSize) {
+            fileSizeTwo = (fileIdentifica.size)/(1024*1024);
+            docSizeTwo.value = `${fileSizeTwo.toFixed(2)} MB`;
+        } else {
+            docSizeTwo.value = "";
+            fileSizeTwo = 0;
+        }
     }
 });
 
 document.querySelector('#formFileSmJurada').addEventListener('change', ()=>{
     let fileIdentifica = document.getElementById('formFileSmJurada').files[0];
-    if (fileIdentifica !== "") {
-        sizeValidate(fileIdentifica,"formFileSmJurada", "selectDocumentThree");
-        fileSizeThree = (fileIdentifica.size)/(1024*1024);
-        docSizeThree.value = fileSizeThree.toFixed(2) + " MB";
+    if (document.getElementById('formFileSmJurada').value !== "") {
+        let correctSize = sizeValidate(fileIdentifica,"formFileSmJurada", "selectDocumentThree");
+        if(correctSize) {
+            fileSizeThree = (fileIdentifica.size)/(1024*1024);
+            docSizeThree.value = `${fileSizeThree.toFixed(2)} MB`;
+        } else {
+            docSizeThree.value = "";
+            fileSizeThree = 0;
+        }
     }
 });
 
 document.querySelector('#formFileSmRecovery').addEventListener('change', ()=>{
     let fileIdentifica = document.getElementById('formFileSmRecovery').files[0];
-    if (fileIdentifica !== "") {
-        sizeValidate(fileIdentifica,"formFileSmRecovery", "selectDocumentFour");
-        fileSizeFour = (fileIdentifica.size)/(1024*1024);
-        docSizeFour.value = fileSizeFour.toFixed(2) + " MB";
+    if (document.getElementById('formFileSmRecovery').value !== "") {
+        let correctSize = sizeValidate(fileIdentifica,"formFileSmRecovery", "selectDocumentFour");
+        if(correctSize) {
+            fileSizeFour = (fileIdentifica.size)/(1024*1024);
+            docSizeFour.value = `${fileSizeFour.toFixed(2)} MB`;
+        } else {
+            docSizeFour.value = "";
+            fileSizeFour = 0;
+        }
     }
 });
 
@@ -84,89 +84,32 @@ btnEnviar.addEventListener('click', async ()=>{
     const numNip = document.getElementById('nip');
     //const client = document.getElementById('cliente').value;
     const donante = document.getElementById('donador').value;
+    // Tipo de suscriptor
     const radio1fisica = document.querySelector('#exampleRadios1');
     const radio2moral = document.querySelector('#exampleRadios2');
     const radio3gobierno = document.querySelector('#exampleRadios3');
+    // numero activo o desconectado
     const radio4activo = document.querySelector('#exampleRadios4');
     const radio5 = document.querySelector('#exampleRadios5');
     const PortTypeId = document.querySelector('#PortType').value;
     const ido = document.querySelector('#ido').value;
     const fechaEntregado = document.querySelector('#fechaEntregado').value;
     const comentarios = document.querySelector('#comentarios').value;
+    const numsByExcelFile = document.getElementById('excelFile');
     
     let flagRadio = 0;
     let activoDesconectado = "";
     let personaMoral = "";
 
     //validación para que los controles estén llenos
-    if (document.getElementById('excelFile').value !== "") {
-        if (document.getElementById('formFileSmJurada').value == "" || document.getElementById('formFileSmIdentifica').value == "" || document.getElementById('formFileSmSolOriginal').value == "" || document.getElementById('attachDocRecovery').style.display !== "none"  && document.getElementById('formFileSmRecovery').value == "") {
-            Swal.fire({
-                icon: 'error',
-                //title: '<p>Oops...</p>',
-                text: 'Something went wrong!',
-                html: '<h4>Oops...</h4>' + '<p>Debe seleccionar los archivos adjuntos correspondientes en la sección de Attachments</p>',
-                footer: '<p>Sección de Archivos Adjuntos</p>'
-            })
-            return false;
-        }
-        if (document.querySelector('#selectDocumentOne').value == "" || document.querySelector('#selectDocumentTwo').value == "" || document.querySelector('#selectDocumentThree').value == "" || document.getElementById('attachDocRecovery').style.display !== "none"  && document.querySelector('#selectDocumentFour').value == "") {
-            Swal.fire({
-                icon: 'error',
-                //title: 'Oops...',
-                text: 'Something went wrong!',
-                html: '<h4>Oops...</h4>' + '<p>Los selectores de documentos no pueden estar vacíos</p>',
-                footer: '<p>Selectores de Documentos</p>'
-            })
-            return false;
-        }
-        if ((fileSizeOne + fileSizeTwo + fileSizeThree + fileSizeFour) > 4) {
-            Swal.fire({
-                icon: 'error',
-                //title: 'Oops...',
-                text: 'Something went wrong!',
-                html: '<h4>Oops...</h4>' + '<p>El total de tamaño de los archivos adjuntos no puede ser mayor a 4 Mega Bytes</p>' + '<p>Tamaño actual: ' + (fileSizeOne+fileSizeTwo+fileSizeThree+fileSizeFour).toFixed(2) + '</p>',
-                footer: '<p>Sección de Archivos Adjuntos</p>'
-            })
-            return false;
-        }
-    }else{
-        if (ido == "") {
-            Swal.fire({
-                icon: 'error',
-                //title: 'Oops...',
-                text: 'Something went wrong!',
-                html: '<h4>Oops...</h4>' + '<p>Debe seleccionar un IDO</p>',
-                footer: '<p>Empresa Receptora</p>'
-            })
-            return false;
-        }
-        if (PortTypeId == "") {
-            Swal.fire({
-                icon: 'error',
-                //title: 'Oops...',
-                text: 'Something went wrong!',
-                html: '<h4>Oops...</h4>' + '<p>Debe seleccionar un tipo de Portación</p>',
-                footer: '<p>Tipo de Portación</p>'
-            })
-            return false;
-        }
+    if (radio1fisica.checked) {
+        
         if (document.getElementById('numeroFrom').value === "") {
             Swal.fire({
                 icon: 'error',
                 //title: 'Oops...',
                 text: 'Something went wrong!',
-                html: '<h4>Oops...</h4>' + '<p>El número de teléfono no puede estar vacío</p>',
-                footer: '<p>Campos de Teléfono</p>'
-            })
-            return false;
-        }
-        if (numTel.value.length < 10 || numTel.value.length > 10) {
-            Swal.fire({
-                icon: 'error',
-                //title: 'Oops...',
-                text: 'Something went wrong!',
-                html: '<h4>Oops...</h4>' + '<p>El número de teléfono debe tener 10 dígitos exáctos</p>',
+                html: '<h4>Oops...</h4>' + '<p>El campo <b>From:</b> no puede estar vacío</p>',
                 footer: '<p>Campos de Teléfono</p>'
             })
             return false;
@@ -176,64 +119,164 @@ btnEnviar.addEventListener('click', async ()=>{
                 icon: 'error',
                 //title: 'Oops...',
                 text: 'Something went wrong!',
-                html: '<h4>Oops...</h4>' + '<p>El campo "To:" no puede estar vacío</p>',
+                html: '<h4>Oops...</h4>' + '<p>El campo <b>To:</b> no puede estar vacío, coloque el número del campo <b>From:</b> para mandar un solo número</p>',
                 footer: '<p>Campos de Teléfono</p>'
             })
             return false;
         }
-        if (numTo.value.length < 10 || numTo.value.length > 10) {
+        if (numTo.value.length !== 10 || numTel.value.length !== 10) {
             Swal.fire({
                 icon: 'error',
                 //title: 'Oops...',
                 text: 'Something went wrong!',
-                html: '<h4>Oops...</h4>' + '<p>El número de teléfono en el campo "To:" debe tener 10 dígitos exáctos</p>',
+                html: '<h4>Oops...</h4>' + '<p>Los números de teléfono a portar deben formarse de <b>10 dígitos numéricos</b></p>',
                 footer: '<p>Campos de Teléfono</p>'
             })
             return false;
         }
-        if ((numNip.value.length > 4 || numNip.value.length < 4) && numNip.value !== "Attachments") {
+        if(numTel.value !== numTo.value) {
             Swal.fire({
                 icon: 'error',
                 //title: 'Oops...',
                 text: 'Something went wrong!',
-                html: '<h4>Oops...</h4>' + '<p>El NIP debe ser de 4 dígitos exactos</p>',
-                footer: '<p>Debe llenar el NIP</p>'
+                html: '<h4>Oops...</h4>' + '<p>Las personas físicas solo pueden tener 1 solo número, <b>coloque el mismo número</b> en el <b>From</b> y en el <b>To</b></p>',
+                footer: '<p>Campos de Teléfono</p>'
             })
             return false;
         }
-        if (radio2moral.checked || radio3gobierno.checked || radio5.checked) {
-            if (document.querySelector('#selectDocumentOne').value == "" || document.querySelector('#selectDocumentTwo').value == "" || document.querySelector('#selectDocumentThree').value == "" || document.getElementById('attachDocRecovery').style.display !== "none"  && document.querySelector('#selectDocumentFour').value == "") {
+        if(radio4activo.checked) {
+            if ((numNip.value !== "Attachments") && (numNip.value.length !== 4)) {
                 Swal.fire({
                     icon: 'error',
                     //title: 'Oops...',
                     text: 'Something went wrong!',
-                    html: '<h4>Oops...</h4>' + '<p>Los selectores de documentos no pueden estar vacíos</p>',
-                    footer: '<p>Selectores de Documentos</p>'
-                });
-                return false;
-            }
-            if (document.getElementById('formFileSmJurada').value == "" || document.getElementById('formFileSmIdentifica').value == "" || document.getElementById('formFileSmSolOriginal').value == "" || document.getElementById('attachDocRecovery').style.display !== "none"  && document.getElementById('formFileSmRecovery').value == "") {
-                Swal.fire({
-                    icon: 'error',
-                    //title: '<p>Oops...</p>',
-                    text: 'Something went wrong!',
-                    html: '<h4>Oops...</h4>' + '<p>Debe seleccionar los archivos adjuntos correspondientes en la sección de Attachments</p>',
-                    footer: '<p>Sección de Archivos Adjuntos</p>'
-                });
-                return false;
-            }
-            if ((fileSizeOne + fileSizeTwo + fileSizeThree + fileSizeFour) > 4) {
-                Swal.fire({
-                    icon: 'error',
-                    //title: 'Oops...',
-                    text: 'Something went wrong!',
-                    html: '<h4>Oops...</h4>' + '<p>El total de tamaño de los archivos adjuntos no puede ser mayor a 4 Mega Bytes</p>' + '<p>Tamaño actual: ' + (fileSizeOne+fileSizeTwo+fileSizeThree+fileSizeFour).toFixed(2) + '</p>',
-                    footer: '<p>Sección de Archivos Adjuntos</p>'
+                    html: '<h4>Oops...</h4>' + '<p>El NIP debe formarse de <b>4 dígitos numéricos</b></p>',
+                    footer: '<p>Debe llenar el NIP</p>'
                 })
                 return false;
             }
         }
     }
+
+    if (radio2moral.checked || radio3gobierno.checked || radio5.checked) {
+        /*if (document.querySelector('#selectDocumentOne').value == "" || document.querySelector('#selectDocumentTwo').value == "" || document.querySelector('#selectDocumentThree').value == "" || (document.getElementById('attachDocRecovery').style.display !== "none"  && document.querySelector('#selectDocumentFour').value == "")) {
+            Swal.fire({
+                icon: 'error',
+                //title: 'Oops...',
+                text: 'Something went wrong!',
+                html: '<h4>Oops...</h4>' + '<p>Los selectores de documentos no pueden estar vacíos</p>',
+                footer: '<p>Selectores de Documentos</p>'
+            })
+            return false;
+        }*/
+        if((numNip.value == "Attachments") && (document.getElementById('formFileSmJurada').value == "" || document.getElementById('formFileSmIdentifica').value == "" || document.getElementById('formFileSmSolOriginal').value == "")) {
+            Swal.fire({
+                icon: 'error',
+                //title: '<p>Oops...</p>',
+                text: 'Something went wrong!',
+                html: '<h4>Oops...</h4>' + '<p>Debe seleccionar los archivos adjuntos correspondientes en la sección de <b>Attachments</b></p>',
+                footer: '<p>Sección de Archivos Adjuntos</p>'
+            })
+            return false;
+        } else if(
+                (numNip.value == "Attachments") && (
+                (document.getElementById('formFileSmJurada').files[0].type !== 'application/pdf' && document.getElementById('formFileSmJurada').files[0].type !== 'image/jpeg') || 
+                (document.getElementById('formFileSmIdentifica').files[0].type !== 'application/pdf' && document.getElementById('formFileSmIdentifica').files[0].type !== 'image/jpeg') || 
+                (document.getElementById('formFileSmSolOriginal').files[0].type !== 'application/pdf' && document.getElementById('formFileSmSolOriginal').files[0].type !== 'image/jpeg'))
+        ){
+            console.log(document.getElementById('formFileSmJurada').files[0].type !== 'application/pdf' && document.getElementById('formFileSmJurada').files[0].type !== 'image/jpeg');
+            console.log(document.getElementById('formFileSmIdentifica').files[0].type !== 'application/pdf' && document.getElementById('formFileSmIdentifica').files[0].type !== 'image/jpeg');
+            console.log(document.getElementById('formFileSmSolOriginal').files[0].type !== 'application/pdf' && document.getElementById('formFileSmSolOriginal').files[0].type !== 'image/jpeg');
+            console.log(numNip.value);
+            Swal.fire({
+                icon: 'error',
+                //title: 'Oops...',
+                text: 'Something went wrong!',
+                html: '<h4>Oops...</h4>' + '<p>Los archivos deben ser solo de tipo <b>PDF o JPG</b></p>',
+                footer: '<p>Sección de Archivos Adjuntos</p>'
+            })
+            return false;
+        }
+        if(document.getElementById('attachDocRecovery').hidden == false) {
+            if(document.getElementById('formFileSmRecovery').value == "") {
+                Swal.fire({
+                    icon: 'error',
+                    //title: 'Oops...',
+                    text: 'Something went wrong!',
+                    html: '<h4>Oops...</h4>' + '<p>Debe seleccionar los archivos adjuntos correspondientes en la sección de <b>Attachments</b></p>',
+                    footer: '<p>Sección de Archivos Adjuntos</p>'
+                })
+                return false;
+            } else if(document.getElementById('formFileSmRecovery').files[0].type !== 'application/pdf' && document.getElementById('formFileSmRecovery').files[0].type !== 'image/jpeg') {
+                Swal.fire({
+                    icon: 'error',
+                    //title: 'Oops...',
+                    text: 'Something went wrong!',
+                    html: '<h4>Oops...</h4>' + '<p>Los archivos deben ser solo de tipo <b>PDF o JPG</b></p>',
+                    footer: '<p>Sección de Archivos Adjuntos</p>'
+                })
+                return false;
+            }
+        }
+
+        if ((fileSizeOne + fileSizeTwo + fileSizeThree + fileSizeFour) > 4) {
+            console.log(`${fileSizeOne} + ${fileSizeTwo} + ${fileSizeThree} + ${fileSizeFour} = ${fileSizeOne+fileSizeTwo+fileSizeThree+fileSizeFour}`);
+            Swal.fire({
+                icon: 'error',
+                //title: 'Oops...',
+                text: 'Something went wrong!',
+                html: '<h4>Oops...</h4>' + '<p>El total de tamaño de los archivos adjuntos no puede ser mayor a <b>4 Mega Bytes</b></p>' + '<p>Tamaño actual: ' + (fileSizeOne+fileSizeTwo+fileSizeThree+fileSizeFour).toFixed(2) + '</p>',
+                footer: '<p>Sección de Archivos Adjuntos</p>'
+            })
+            return false;
+        }
+        if (numsByExcelFile.value === "") {
+            if (document.getElementById('numeroFrom').value === "") {
+                Swal.fire({
+                    icon: 'error',
+                    //title: 'Oops...',
+                    text: 'Something went wrong!',
+                    html: '<h4>Oops...</h4>' + '<p>El campo <b>From:</b> no puede estar vacío</p>',
+                    footer: '<p>Campos de Teléfono</p>'
+                })
+                return false;
+            }
+            if (document.getElementById('numeroTo').value === "") {
+                Swal.fire({
+                    icon: 'error',
+                    //title: 'Oops...',
+                    text: 'Something went wrong!',
+                    html: '<h4>Oops...</h4>' + '<p>El campo <b>To:</b> no puede estar vacío, coloque el número del campo <b>From:</b> para mandar un solo número</p>',
+                    footer: '<p>Campos de Teléfono</p>'
+                })
+                return false;
+            }
+            if (numTo.value.length !== 10 || numTel.value.length !== 10) {
+                Swal.fire({
+                    icon: 'error',
+                    //title: 'Oops...',
+                    text: 'Something went wrong!',
+                    html: '<h4>Oops...</h4>' + '<p>Los números de teléfono a portar deben formarse de <b>10 dígitos numéricos</b></p>',
+                    footer: '<p>Campos de Teléfono</p>'
+                })
+                return false;
+            }
+        } else {
+            let nameFileXlsm = numsByExcelFile.files[0].name;
+            let extensionFileXlsm = nameFileXlsm.split('.').pop();
+            if(!(numsByExcelFile.files[0].type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' || extensionFileXlsm === 'xlsm' || extensionFileXlsm === 'xlsx')){
+                Swal.fire({
+                    icon: 'error',
+                    //title: 'Oops...',
+                    text: 'Something went wrong!',
+                    html: '<h4>Oops...</h4>' + '<p>El archivo debe ser de tipo <b>XLSX</b></p>',
+                    footer: '<p>Archivo Excel</p>'
+                })
+                return false;
+            }
+        }
+    }
+
     //desactivar botón enviar
     btnEnviar.disabled = true;
 
@@ -256,91 +299,75 @@ btnEnviar.addEventListener('click', async ()=>{
     data.append("comentarios", comentarios);
     data.append("fechaTimeStamp",fechaTimeStamp);
 
+    // radio1fisica && radio4activo = numNip;
+    // radio1fisica && radio5desconectado == formFileSmIdentifica, formFileSmSolOriginal, formFileSmJurada;
+    // radio2moral && radio4activo = formFileSmIdentifica, formFileSmSolOriginal, formFileSmJurada;
+    // radio2moral && radio5desconectado = formFileSmIdentifica, formFileSmSolOriginal, formFileSmJurada, formFileSmRecovery;
+    // radio3gobierno && radio4activo = formFileSmIdentifica, formFileSmSolOriginal, formFileSmJurada;
+    // radio3gobierno && radio5desconectado = formFileSmIdentifica, formFileSmSolOriginal, formFileSmJurada;
+
     if (radio2moral.checked) {
         personaMoral = "Y";
+        flagRadio = 2; //moral
     }else{
         personaMoral = "N";
     }
-    data.append("personaMoral",personaMoral);
 
     if (radio4activo.checked) {
         activoDesconectado = "N";
     }else{
         activoDesconectado = "Y";
     }
-    data.append("activoDesconectado",activoDesconectado);
+
+    if (radio1fisica.checked) {
+        flagRadio = 1; //física
+    }
+
+    if (radio3gobierno.checked) {
+        flagRadio = 3; //gobierno
+    }
     
     //validación para el envío de la data
-    if (radio1fisica.checked) {
-        //física
-        flagRadio = 1;
-        data.append("numTel", numTel.value);
-        data.append("numTo", numTo.value);
-        data.append("numNip", numNip.value);
-        
-        if (radio4activo.checked){
-            //activo
-            
-            
-        }else{
-            //desconectado
-            data.append("selectDocumentOne",document.querySelector('#selectDocumentOne').value); //agregado para el tipo de documento
-            data.append("selectDocumentTwo",document.querySelector('#selectDocumentTwo').value); //agregado para el tipo de documento
-            data.append("selectDocumentThree",document.querySelector('#selectDocumentThree').value); //agregado para el tipo de documento
-            data.append("formFileSmIdentifica", document.getElementById('formFileSmIdentifica').files[0]);
-            data.append("formFileSmSolOriginal", document.getElementById('formFileSmSolOriginal').files[0]);
-            data.append("formFileSmJurada", document.getElementById('formFileSmJurada').files[0]);
-        }
-    }else {
-        //moral/Gobierno -> activo
-        if (radio2moral.checked){
-            //moral
-            flagRadio = 2;
-        }else{
-            //gobierno
-            flagRadio = 3;
-        }
-        data.append("selectDocumentOne",document.querySelector('#selectDocumentOne').value); //agregado para el tipo de documento
-        data.append("selectDocumentTwo",document.querySelector('#selectDocumentTwo').value); //agregado para el tipo de documento
-        data.append("selectDocumentThree",document.querySelector('#selectDocumentThree').value); //agregado para el tipo de documento
+    if(radio1fisica.checked && radio4activo.checked) {
+    } else {
+        data.append("selectDocumentOne","I"); //agregado para el tipo de documento
+        data.append("selectDocumentTwo","S"); //agregado para el tipo de documento
+        data.append("selectDocumentThree","P"); //agregado para el tipo de documento
         data.append("formFileSmIdentifica", document.getElementById('formFileSmIdentifica').files[0]);
         data.append("formFileSmSolOriginal", document.getElementById('formFileSmSolOriginal').files[0]);
         data.append("formFileSmJurada", document.getElementById('formFileSmJurada').files[0]);
-        if(document.getElementById("exampleRadios5").checked){
-            data.append("selectDocumentFour",document.querySelector('#selectDocumentFour').value); //agregado para el tipo de documento
+
+        if (radio2moral.checked && radio5.checked) {
+            data.append("selectDocumentFour","R"); //agregado para el tipo de documento
             data.append("formFileSmRecovery", document.getElementById('formFileSmRecovery').files[0]);
         }
-        if (numTel.value != "") {
-            data.append("numTel", numTel.value);
-            data.append("numTo", numTo.value);
-            data.append("numNip", numNip.value); //agregado por mi
-            
-        }else{
-            //leemos el archivo para moral
-            const content = await readXlsxFile( appExcel.files[0] );
-            let jsonBlob = new Blob([JSON.stringify(content)], {type: "application/json"});//text
-            data.append("numNip", numNip.value);
-            data.append("numTel", "");
-            data.append("numTo", "");
-            data.append("listadoNum", jsonBlob);
-        }
-        //moral/gobierno -> desconectado
-        
-        
-    /* }else if (radio3gobierno.checked){
-        flagRadio = 3;*/
-    } 
+    }
+    
+    if (numsByExcelFile.value !== "") {
+        //leemos el archivo para moral
+        const content = await readXlsxFile( appExcel.files[0] );
+        let jsonBlob = new Blob([JSON.stringify(content)], {type: "application/json"});//text
+        data.append("listadoNum", jsonBlob);
+        data.append("numTel", "");
+        data.append("numTo", "");
+    } else {
+        data.append("numTel", numTel.value);
+        data.append("numTo", numTo.value);
+    }
 
+    data.append("personaMoral",personaMoral);
+    data.append("activoDesconectado",activoDesconectado);
+    data.append("numNip", numNip.value);
     data.append("flagRadio",flagRadio);
 
     //----------------------------------------AQUÍ EMPIEZA LA FUNCIÓN QUE PROCESA PARA EL PHP-------------------------------
     //call api->php
     ProcessSender(data).then(res =>{
+        console.log(res);
         if (res === false || res.xml === false) {
             return Swal.fire("Warning","Error, el proceso se interrumpió; vuelva a intentarlo","warning");
         }else{
             if (res.msg !== 'Execution Error') {
-                
                 let portTypeText = document.getElementById('PortType');
                 let portTypeTx = portTypeText.options[portTypeText.selectedIndex].text;
                 let idoText = document.getElementById('ido');
@@ -376,12 +403,18 @@ btnEnviar.addEventListener('click', async ()=>{
                     document.getElementById('formFileSmSolOriginal').value = "";
                     document.getElementById('formFileSmJurada').value = "";
                     document.getElementById('formFileSmRecovery').value = "";
+                    document.getElementById('excelFile').value = "";
+                    // document.getElementById('tablePhoneId').querySelector('tbody').innerHTML = "";
+                    document.querySelector('#exampleRadios1').checked = true;
                     document.querySelector('#exampleRadios2').checked = false;
                     document.querySelector('#exampleRadios3').checked = false;
-                    document.querySelector('#exampleRadios1').checked = true;
                     document.querySelector('#exampleRadios4').checked = true;
                     document.querySelector('#exampleRadios5').checked = false;
                     document.querySelector('#conTable').style.display = "none";
+                    fileSizeOne = 0;
+                    fileSizeTwo = 0;
+                    fileSizeThree = 0;
+                    fileSizeFour = 0;
                     numeroFisica();
                     btnEnviar.disabled = false;
                 }
@@ -396,18 +429,15 @@ btnEnviar.addEventListener('click', async ()=>{
 
 async function ProcessSender(formdata){
     let url = '../php/senderSPN.php';
-
     console.log(...formdata);
-
     let res = await fetch(url, {
     method: "POST",
     body: formdata,
     /*  headers:{
         "Content-Type":"application/json"
     } */
-    })   
+    })
     if (res.ok){
-        //console.log(res.status);
         let text = await res.json();// res.text()
         //console.log(text.xml);
         

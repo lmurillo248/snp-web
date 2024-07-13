@@ -113,26 +113,33 @@ document.querySelector('#btnIdPortDelete').addEventListener('click', async ()=>{
         });
     }
     showLoading();
-
-    if (txIdPort !== "") {
+    // /^[0-9]+$/.test(txIdPort)
+    if (txIdPort !== "" && txIdPort.length === 21) {
         let data = new FormData();
+        let getDida = document.getElementById('idPortDida').value;
+        let getDcr = document.getElementById('idPortDcr').value;
         let fechaTimeStamp=new Date(new Date().toString().split('GMT')[0]+' UTC').toISOString().replaceAll('-', '')
         .replaceAll('T', '')
         .replaceAll(':', '')
         .replaceAll('.000Z', '');
         data.append("idPortDelete",txIdPort);
         data.append("fechaTimeStamp",fechaTimeStamp);
+        data.append("getDida",getDida);
+        data.append("getDcr",getDcr);
         
         ProcessConsulta(data,"../php/sender3001.php").then(res =>{
+            console.log(res);
             swal.close();
-            if (res === false || res.response === false) {
+            if (res == false || res.msg === 'Execution Error') {
                 return Swal.fire("Warning","Error al enviar el mensaje, vuelva a intentarlo","warning");
-            }else{
-                if (res.countX == 0 || res.xmlmsg == "Error PortID") {
+            } else {
+                if (res.statusMsg < 1001) {
                     return Swal.fire("Warning","No se encontró el PortID que desea cancelar","warning");
-                }
-                if (res.msg !== 'Execution Error') {
-                    
+                } else if(res.statusMsg > 1007){
+                    return Swal.fire("Warning",`El PortId se encuentra en un estado ${res.statusMsg}`,"warning");
+                } else if(res.xmlmsg == "Error: DIDA or DCR is empty"){
+                    return Swal.fire("Warning","El PortId se encuentra en un estado 1001, necesita colocar el DIDA y DCR","warning");
+                } else if (res.response !== false) {
                     Swal.fire({
                         icon: 'success',
                         html: '<h6>PortId: ' + txIdPort + '</h6>' + 
@@ -140,13 +147,15 @@ document.querySelector('#btnIdPortDelete').addEventListener('click', async ()=>{
                         footer: '<h4 style="color:#28a745">Operación Exitosa</h4>'
                     });
                     document.querySelector('#idPortDelete').value = "";
+                    document.querySelector('#idPortDida').value = "";
+                    document.querySelector('#idPortDcr').value = "";
                 }else{
                     return Swal.fire("Warning","Error en la ejecución del programa","warning");
                 }
             }
         });
     }else{
-        return Swal.fire("Warning","El campo de Fecha y el PortID no pueden estar vacíos, verifique la información","warning");
+        return Swal.fire("Warning","El campo de PortID debe contener un dígito de 21 números","warning");
     }
 
 });

@@ -42,15 +42,46 @@ class ExcelPrinter{
         /* excel.header().forEach(title => {
             table.querySelector("thead>tr").innerHTML += `<td>${title}</td>`
         }); */
-        table.querySelector('tbody').innerHTML = "";
+
+        if(typeof(excel.header()[0]) === 'number' && excel.header()[0].toString().length === 10) {
+            table.innerHTML = `
+                <thead>
+                    <tr></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>${excel.header()[0]}</td>
+                    </tr>
+                </tbody>
+            `
+        } else {
+            table.innerHTML = `
+                <thead>
+                    <tr></tr>
+                </thead>
+                <tbody>
+                    <tr class="table-danger">
+                        <td>${excel.header()[0]}</td>
+                    </tr>
+                </tbody>
+            `
+        }
 
         for (let index = 0; index < excel.rows().count(); index++) {
             const row = excel.rows().get(index);
-            table.querySelector('tbody').innerHTML += `
-                <tr>
-                    <td>${row.Telefonos()}</td>
-                </tr>
-            `
+            if(typeof(row.Telefonos()) === 'number' && row.Telefonos().toString().length === 10) {
+                table.querySelector('tbody').innerHTML += `
+                    <tr>
+                        <td>${row.Telefonos()}</td>
+                    </tr>
+                `
+            } else {
+                table.querySelector('tbody').innerHTML += `
+                    <tr class="table-danger">
+                        <td>${row.Telefonos()}</td>
+                    </tr>
+                `
+            }
             console.log(excel.rows().get(index).Telefonos());
             console.log(excel.rows().get(index));
             console.log(excel.rows().get(index));

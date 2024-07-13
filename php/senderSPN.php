@@ -12,7 +12,7 @@ $numTo = $_POST['numTo'];
 $numNip = $_POST['numNip'];
 $comentarios = $_POST['comentarios'];
 $fechaTimeStamp = $_POST['fechaTimeStamp'];
-
+$xml = "";
 
 #-------------------------------------------------------------
 
@@ -72,6 +72,7 @@ if ($numTel != "" && $numTo != "" && $numNip != "Attachments") {
 	$documento = move_uploaded_file($file1,$fileTarget); */
 
 	function fileSaver($fileIdenty, $fileNameX){
+
 		$target_dir = "E:\appspn\documentos/";
 		$file = $_FILES[$fileIdenty]['name'];
 		$path = pathinfo($file);
@@ -85,12 +86,10 @@ if ($numTel != "" && $numTo != "" && $numNip != "Attachments") {
 	}
 
 	$formFileSmIdentificaExt = fileSaver("formFileSmIdentifica",$portid.$MessageID."-".$selectDocumentOne); 
-	
 /* 	move_uploaded_file($_FILES["formFileSmSolOriginal"]["tmp_name"], $_FILES["formFileSmSolOriginal"]["name"]);
 	#$bin_original = file_get_contents($_FILES["formFileSmSolOriginal"]["name"]);*/
 
 	$formFileSmSolOriginalExt = fileSaver("formFileSmSolOriginal",$portid.$MessageID."-".$selectDocumentTwo); 
-
 /*	move_uploaded_file($_FILES["formFileSmJurada"]["tmp_name"], $_FILES["formFileSmJurada"]["name"]);
 	#$bin_juarada = file_get_contents($_FILES["formFileSmJurada"]["name"]);*/
 
@@ -206,13 +205,13 @@ try {
 		$response = curl_exec($ch);//aquí se guarda la respuesta cuando es exitoso, cuando no se procesa correctamente devuelve false.
 
 	#echo htmlentities($xml);
-	$resp = array('xml'=>$response,'portid'=>$portid,'folioID'=>$folioID, 'TotalPhoneNums'=>$TotalPhoneNums,'fechaTimeStamp'=> $fechaTimeStamp,'msg'=>'Success');
+	$resp = array('xml'=>$response,'portid'=>$portid,'folioID'=>$folioID, 'TotalPhoneNums'=>$TotalPhoneNums,'fechaTimeStamp'=> $fechaTimeStamp,'msg'=>'Success', 'xmlmsg'=>$xml);
 	echo json_encode($resp);
 	#echo $arrayListado[1][0];
 	#echo $xml;
 } catch (\Throwable $th) {
 	
-	$resp = array('xml'=>$response,'portid'=>$portid,'folioID'=>$folioID, 'TotalPhoneNums'=>$TotalPhoneNums,'msg'=>'Execution Error');
+	$resp = array('xml'=>$response,'portid'=>$portid,'folioID'=>$folioID, 'TotalPhoneNums'=>$TotalPhoneNums,'msg'=>'Execution Error', 'xmlmsg'=>$xml);
 	echo json_encode($resp);
 }
 

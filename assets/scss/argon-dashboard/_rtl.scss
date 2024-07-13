@@ -108,3 +108,153 @@
     }
   }
 }
+
+// °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°° OTHERS °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
+
+.item1{
+  display: inline;
+}
+.item2{
+  display: none;
+}
+.item3{
+  display: none;
+}
+.item4{
+  display: inline;
+}
+.item5{
+  display: none;
+}
+.item6{
+  display: none;
+}
+.item7{
+  display: none;
+}
+.item8{
+  display: none;
+}
+.item9{
+  display: none;
+}
+.conTableY{
+  display: none;
+  height: 300px;
+  overflow-y: scroll;
+}
+.conTableY::-webkit-scrollbar {
+  width: 12px;               /* width of the entire scrollbar */
+  border-radius: 20px; 
+}
+.conTableY::-webkit-scrollbar-track {
+  background: #e9ecef;        /* color of the tracking area */
+  border-radius: 20px; 
+}
+.conTableY::-webkit-scrollbar-thumb {
+  background-color: blue;    /* color of the scroll thumb */
+  border-radius: 20px;       /* roundness of the scroll thumb */
+  border: 3px solid #e9ecef;  /* creates padding around scroll thumb */
+}
+.conTableYE{
+  display: none;
+  height: 300px;
+  overflow-y: scroll;
+}
+.conTableYE::-webkit-scrollbar {
+  width: 12px;               /* width of the entire scrollbar */
+  border-radius: 20px; 
+}
+.conTableYE::-webkit-scrollbar-track {
+  background: #e9ecef;        /* color of the tracking area */
+  border-radius: 20px; 
+}
+.conTableYE::-webkit-scrollbar-thumb {
+  background-color: blue;    /* color of the scroll thumb */
+  border-radius: 20px;       /* roundness of the scroll thumb */
+  border: 3px solid #e9ecef;  /* creates padding around scroll thumb */
+}
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+input[type=number] { -moz-appearance:textfield; }
+/*# sourceMappingURL=dashboard-free.css.map */
+.tableConsY{
+  height: 500px;
+  overflow-y: scroll;
+}
+.tableConsY::-webkit-scrollbar {
+  width: 12px;               /* width of the entire scrollbar */
+  border-radius: 20px; 
+}
+.tableConsY::-webkit-scrollbar-track {
+  background: #e9ecef;        /* color of the tracking area */
+  border-radius: 20px; 
+}
+.tableConsY::-webkit-scrollbar-thumb {
+  background-color: blue;    /* color of the scroll thumb */
+  border-radius: 20px;       /* roundness of the scroll thumb */
+  border: 3px solid #e9ecef;  /* creates padding around scroll thumb */
+}
+
+.calendar{
+  width: 100%;
+  height: 70%;
+  user-select: none;
+}
+
+.currentDate{
+  font-size: 17px;
+  font-weight: bold;
+  color: var(--bs-primary-rgb);
+}
+
+.days{
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+  padding: 20px 0;
+  font-size: 1.2rem;
+  color: var(--bs-red);
+}
+
+.dates{
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+}
+
+.date{
+  text-align: center;
+  padding: 20px 0;
+  font-size: 1.6rem;
+  transition: all 0.3s;
+  border: 3px solid transparent;
+  border-radius: 15px;
+  cursor: pointer;
+  background-color: transparent;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1);
+  color: rgba(0, 0, 0, 0.3);
+}
+
+.date.currentMonth{
+  color: var(--bs-primary);
+}
+
+.date:hover{
+  border-color: var(--bs-gray);
+  background-color: #0dcaf0;
+  color: #FFF;
+}
+
+.date.selected{
+  background-color: #0da5c0;
+  color: #FFF;
+}
+
+.mostrar-attach{
+  display: none;
+}

@@ -18,7 +18,8 @@ if (isset($_SESSION['usuario'])) {
     }
     $stid = oci_parse($conn, "SELECT IDO, EMPRESA FROM SPN_MSJ_RECEPTORA WHERE IDO = 102 ORDER BY IDO ASC");
     oci_execute($stid);
-    $stidFix = oci_parse($conn, "SELECT  * FROM SPN_MSJ_TIPO_PORT WHERE TIPO_DE_PORTACION NOT LIKE '%PP%' ORDER BY TIPO_DE_PORTACION ASC");
+    $stidFix = oci_parse($conn, "SELECT  * FROM SPN_MSJ_TIPO_PORT ORDER BY TIPO_DE_PORTACION ASC");
+    // $stidFix = oci_parse($conn, "SELECT  * FROM SPN_MSJ_TIPO_PORT WHERE TIPO_DE_PORTACION NOT LIKE '%PP%' ORDER BY TIPO_DE_PORTACION ASC");
     oci_execute($stidFix);
   } catch (\Throwable $th) {
     //throw $th;
@@ -116,7 +117,7 @@ if (isset($_SESSION['usuario'])) {
           <a class="nav-link" style="cursor: pointer;">
             <div
               class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-watch-time text-danger text-sm opacity-10"></i>
+              <i class="ni ni-map-big text-danger text-sm opacity-10"></i>
             </div>
             <span class="nav-link-text ms-1">Seguimiento</span>
           </a>
@@ -183,10 +184,12 @@ if (isset($_SESSION['usuario'])) {
               </div>
             </li>
             <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
-              <a href="javascript:;" class="nav-link text-white p-0" id="iconNavbarSidenav">
+              <a href="javascript:;" class="nav-link text-white p-0 position-relative" id="iconNavbarSidenav">
                 <div class="sidenav-toggler-inner">
                   <i class="sidenav-toggler-line bg-white"></i>
+                  <i class="sidenav-toggler-line bg-transparent"></i>
                   <i class="sidenav-toggler-line bg-white"></i>
+                  <i class="sidenav-toggler-line bg-transparent"></i>
                   <i class="sidenav-toggler-line bg-white"></i>
                 </div>
               </a>
@@ -205,7 +208,7 @@ if (isset($_SESSION['usuario'])) {
       <div class="row">
         <div class="col-xl-4 col-sm-6 mb-xl-0 mb-4">
           <div class="card">
-            <div class="card-body p-3">
+            <div class="card-body py-3 px-4">
               <div class="row">
                 <div class="col-8">
                   <div class="numbers">
@@ -219,9 +222,9 @@ if (isset($_SESSION['usuario'])) {
                     </p>
                   </div>
                 </div>
-                <div class="col-4 text-end">
+                <div class="col-4 text-end align-self-center">
                   <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle">
-                    <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i>
+                    <i class="ni ni-calendar-grid-58 text-lg opacity-10" aria-hidden="true"></i>
                   </div>
                 </div>
               </div>
@@ -230,7 +233,7 @@ if (isset($_SESSION['usuario'])) {
         </div>
         <div class="col-xl-4 col-sm-6 mb-xl-0 mb-4">
           <div class="card">
-            <div class="card-body p-3">
+            <div class="card-body py-3 px-4">
               <div class="row">
                 <div class="col-8">
                   <div class="numbers">
@@ -244,9 +247,9 @@ if (isset($_SESSION['usuario'])) {
                     </p>
                   </div>
                 </div>
-                <div class="col-4 text-end">
+                <div class="col-4 text-end align-self-center">
                   <div class="icon icon-shape bg-gradient-danger shadow-danger text-center rounded-circle">
-                    <i class="ni ni-world text-lg opacity-10" aria-hidden="true"></i>
+                    <i class="ni ni-watch-time text-lg opacity-10" aria-hidden="true"></i>
                   </div>
                 </div>
               </div>
@@ -255,21 +258,21 @@ if (isset($_SESSION['usuario'])) {
         </div>
         <div class="col-xl-4 col-sm-6 mb-xl-0 mb-4">
           <div class="card">
-            <div class="card-body p-3">
+            <div class="card-body py-3 px-4">
               <div class="row">
                 <div class="col-8">
                   <div class="numbers">
-                    <p class="text-sm mb-0 text-uppercase font-weight-bold" style="color:#0b253d00;">buscador</p>
+                    <p class="text-sm mb-0 text-uppercase font-weight-bold">buscador</p>
                       <button class="form-control" style="padding: 6px" data-bs-toggle="modal" data-bs-target="#exampleModalBuscador">Búsqueda Avanzada</button>
-                    <p class="mb-0" style="color:#0b253d00;">
-                      <span class=" text-sm font-weight-bolder" style="color:#0b253d00;">Search</span>
+                    <p class="mb-0">
+                      <span class="text-success text-sm font-weight-bolder">Search</span>
                       Engine
                     </p>
                   </div>
                 </div>
-                <div class="col-4 text-end">
+                <div class="col-4 text-end align-self-center">
                   <div class="icon icon-shape bg-gradient-success shadow-success text-center rounded-circle">
-                    <i class="ni ni-folder-17 text-lg opacity-10"></i>
+                    <i class="ni ni-zoom-split-in text-lg opacity-10"></i>
                   </div>
                 </div>
               </div>
@@ -398,7 +401,7 @@ if (isset($_SESSION['usuario'])) {
                   <div class="d-flex align-items-center">
                     <p class="mb-0">Número(s) a Portar</p>
                   </div>
-                  <i class="text-secondary fs-6">Para números individuales el <b>From</b> y el <b>To</b> se deben llenar con el mismo número.</i>
+                  <p class="form-text fst-italic">Para números individuales el <b>From</b> y el <b>To</b> se deben llenar con el mismo número.</p>
                   <div class="row">
                     <div class="col-md-4">
                       <label for="example-text-input" class="form-control-label">From:</label>
@@ -501,7 +504,7 @@ if (isset($_SESSION['usuario'])) {
                       <input class="form-control" type="text" placeholder="Default input" aria-label="default input example" id="docSizeThree" disabled>
                     </div>
                   </div>
-                  <div class="row" id="attachDocRecovery" style="none">
+                  <div class="row" id="attachDocRecovery" hidden>
                     <div class="col-md-3" hidden>
                       <label for="formFileSmRecovery" class="form-label">Tipo de documento.</label>
                       <select class="form-select" aria-label="Default select example" name="" id="selectDocumentFour">
@@ -534,16 +537,20 @@ if (isset($_SESSION['usuario'])) {
                     <div class="row">
                       <div class="col-md-12">
                         <label for="excelFile" class="form-label">Importar listado de números.</label>
+                        <p class="form-text fst-italic">Si se adjunta un listado de números, se ignorará el rango de números de la sección de arriba.</p>
                       </div>
                     </div>
                     <div class="row">
-                      <div class="col-md-8">
+                      <div class="col-md-6">
                         <input type="file" class="form-control" id="excelFile"  accept=".xlsx">
                         <!-- ,.csv,.xls,.xml,.txt -->
                       </div>
-                      <div class="col-md-4">
+                      <div class="col-md-6">
                         <button class="btn btn-primary" id="cleanTable">Limpiar Tabla</button>
                       </div>
+                      <!-- <div class="col-md-3">
+                        <a class="btn btn-primary btn-sm ms-auto px-3" href="../docs/num_list.xlsx"><i class="ni ni-cloud-download-95 pe-2"></i>ejemplo.xlsx</a>
+                      </div> -->
                     </div>
                   </div>
                 </div>
@@ -710,8 +717,9 @@ if (isset($_SESSION['usuario'])) {
             </div>
             <div class="card-body p-3">
               <div class="card-header pb-0">
-                <div class="d-flex align-items-center">
-                  <p class="mb-0">Cancelar PortID</p>
+                <div class="d-flex align-items-center row">
+                  <p class="mb-0 col-md-4">Cancelar PortID:</p>
+                  <p class="mb-0 col-md-4">Opcional:</p>
                 </div>
                 <!-- ---------------------------------------------------------------------------------- -->
                 <div class="d-flex align-items-center">
@@ -722,10 +730,16 @@ if (isset($_SESSION['usuario'])) {
                     <p class="mb-0"></p>
                   </div>
                   <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                       <input class="form-control" placeholder="Ingrese el PortID" type="text" value="" name="idPortDelete" id="idPortDelete">
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-2">
+                      <input class="form-control" placeholder="DIDA" id="idPortDida" name="idPortDida">
+                    </div>
+                    <div class="col-md-2">
+                      <input class="form-control" placeholder="DCR" id="idPortDcr" name="idPortDcr">
+                    </div>
+                    <div class="col-md-4">
                       <button class="btn btn-warning" style="float:right"  id="btnIdPortDelete">Cancelar Portación</button>
                     </div>
                   </div>
@@ -1055,6 +1069,8 @@ if (isset($_SESSION['usuario'])) {
     const conTableX = document.querySelector(".conTableY");
     fileExcelClick.addEventListener("click", () => {
       conTableX.style.display = "inline";
+      // document.getElementById("numeroFrom").value = "";
+      // document.getElementById("numeroTo").value = "";
     });
 
     const fileExcelClickE = document.querySelector("#excelFileEliminacion");
@@ -1169,9 +1185,9 @@ if (isset($_SESSION['usuario'])) {
       if (valor == "Attachments") {
         attachDiv.style.display = "inline-block";
         if(document.getElementById("exampleRadios2").checked == true && document.getElementById("exampleRadios5").checked == true){
-          attFormGroupRecov.style.display = "flex";
+          attFormGroupRecov.hidden = false;
         } else {
-          attFormGroupRecov.style.display = "none";
+          attFormGroupRecov.hidden = true;
           formFileGroupRecov.value = "";
           docSizeGroupRecov.value = "";
         }
@@ -1223,11 +1239,11 @@ if (isset($_SESSION['usuario'])) {
         document.getElementById("exampleRadios3").checked = false;
         conTableX.style.display = "none";
         excelFile.value = "";
-        if (document.getElementById("attachDocRecovery").style.display = "flex") {
-          document.getElementById("attachDocRecovery").style.display = "none";
-          document.getElementById("formFileSmRecovery").value = "";
-          document.getElementById("docSizeFour").value = "";
-        }
+      }
+      if (document.getElementById("attachDocRecovery").hidden == false) {
+        document.getElementById("attachDocRecovery").hidden = true;
+        document.getElementById("formFileSmRecovery").value = "";
+        document.getElementById("docSizeFour").value = "";
       }
       if (checkexampleRadios5.checked) {
 
@@ -1240,9 +1256,9 @@ if (isset($_SESSION['usuario'])) {
       if (checkexampleRadios2.checked) {
         document.getElementById("exampleRadios1").checked = false;
         document.getElementById("exampleRadios3").checked = false;
-        if (checkexampleRadios5.checked) {
-          document.getElementById("attachDocRecovery").style.display = "flex";
-        }
+      }
+      if (checkexampleRadios5.checked) {
+        document.getElementById("attachDocRecovery").hidden = false;
       }
       numeroGobiernoMoral();
     });
@@ -1251,11 +1267,11 @@ if (isset($_SESSION['usuario'])) {
       if (checkexampleRadios3.checked) {
         document.getElementById("exampleRadios1").checked = false;
         document.getElementById("exampleRadios2").checked = false;
-        if (document.getElementById("attachDocRecovery").style.display = "flex") {
-          document.getElementById("attachDocRecovery").style.display = "none";
-          document.getElementById("formFileSmRecovery").value = "";
-          document.getElementById("docSizeFour").value = "";
-        }
+      }
+      if (document.getElementById("attachDocRecovery").hidden == false) {
+        document.getElementById("attachDocRecovery").hidden = true;
+        document.getElementById("formFileSmRecovery").value = "";
+        document.getElementById("docSizeFour").value = "";
       }
       numeroGobiernoMoral();
     });
@@ -1263,11 +1279,11 @@ if (isset($_SESSION['usuario'])) {
     checkexampleRadios4.addEventListener('click', () => {
       if (checkexampleRadios4.checked) {
         document.getElementById("exampleRadios5").checked = false;
-        if (document.getElementById("attachDocRecovery").style.display = "flex") {
-          document.getElementById("attachDocRecovery").style.display = "none";
-          document.getElementById("formFileSmRecovery").value = "";
-          document.getElementById("docSizeFour").value = "";
-        }
+      }
+      if (document.getElementById("attachDocRecovery").hidden == false) {
+        document.getElementById("attachDocRecovery").hidden = true;
+        document.getElementById("formFileSmRecovery").value = "";
+        document.getElementById("docSizeFour").value = "";
       }
       if (checkexampleRadios2.checked || checkexampleRadios3.checked) {
 
@@ -1280,9 +1296,9 @@ if (isset($_SESSION['usuario'])) {
     checkexampleRadios5.addEventListener('click', () => {
       if (checkexampleRadios5.checked) {
         document.getElementById("exampleRadios4").checked = false;
-        if (checkexampleRadios2.checked) {
-          document.getElementById("attachDocRecovery").style.display = "flex";
-        }
+      }
+      if (checkexampleRadios2.checked) {
+        document.getElementById("attachDocRecovery").hidden = false;
       }
       numeroGobiernoMoral();
       var moralGobierno = document.getElementById("listadoMoralGob");

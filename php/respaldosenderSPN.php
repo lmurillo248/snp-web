@@ -21,6 +21,13 @@ if(isset($_POST['signinBtn'])){
     $config['baseSearch'] = 'ou=users,ou=guests,dc=izzitelecom,dc=net';
     $config['columnaLdap'] = 'mail';
 
+    // 'SPNDESARROLLO=(DESCRIPTION=(
+    //     ADDRESS=(PROTOCOL=TCP)
+    //     (HOST=etalides.izzitelecom.net)
+    //     (PORT=1595))
+    //     (CONNECT_DATA=(SERVER=DEDICATED)
+    //     (SERVICE_NAME=spndesarrolloservice.izzitelecom.net)
+    // ))'
 
     // conexión al servidor LDAP
     $ldapconn = ldap_connect($config['urlLdap']) or die("Could not connect to LDAP server.");

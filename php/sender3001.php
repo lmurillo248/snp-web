@@ -3,7 +3,8 @@
 require_once '../php/config/conexion.php';
 date_default_timezone_set('America/Mazatlan');
 try {
-
+    $getDida = $_POST['getDida'];
+    $getDcr = $_POST['getDcr'];
     $idPort = $_POST['idPortDelete'];
     $fechaTimeStamp = $_POST['fechaTimeStamp'];
     #mensaje 3001
@@ -19,20 +20,36 @@ try {
     #variable vacía
     $xmlmsg = "";
     $xml = "";
+    $statusMsg = "";
     $response = false;
 
-    $stidX = oci_parse($conn, "SELECT PORTID,PORTEXECDATE,REQPORTEXECDATE
-                                FROM SPN_MSJ_1006  WHERE PORTID = :idPort");
+    // $stidX = oci_parse($conn, "SELECT PORTID,PORTEXECDATE,REQPORTEXECDATE FROM SPN_MSJ_1006  WHERE PORTID = :idPort");
+    $stidX = oci_parse($conn, "SELECT ID, FECHA, SENDER, PORTID, PORTID_AUX, NOTA, MESSAGEID, ACUSE, XMLMSG
+                                FROM SPN_MSJ 
+                                WHERE PORTID = :idPort
+                                AND MESSAGEID = (SELECT MAX(MESSAGEID) FROM SPN_MSJ WHERE PORTID = :idPort)
+                                AND ACUSE LIKE 'Recibido%'");
     oci_bind_by_name($stidX, ":idPort", $idPort);
     oci_execute($stidX);
-
+    while ($row = oci_fetch_array($stidX, OCI_ASSOC+OCI_RETURN_NULLS)) {
+        $statusMsg = $row['MESSAGEID'];
+    }
+    
     $countX = oci_fetch_all($stidX, $resultSet, 0, -1, OCI_FETCHSTATEMENT_BY_ROW);
 
-    if ($countX > 0) {
+    if (intval($statusMsg) < 1008 && intval($statusMsg) > 0) {
         
+        // $stid = oci_parse($conn, "SELECT ID, FECHA, SENDER, PORTID, PORTID_AUX, NOTA, MESSAGEID, ACUSE, XMLMSG 
+        //                                 FROM SPN_MSJ WHERE PORTID = :idPort AND MESSAGEID = '1005'");
         $stid = oci_parse($conn, "SELECT ID, FECHA, SENDER, PORTID, PORTID_AUX, NOTA, MESSAGEID, ACUSE, XMLMSG 
-                                        FROM SPN_MSJ WHERE PORTID = :idPort AND MESSAGEID = '1005'");
-                                        
+                                FROM SPN_MSJ
+                                WHERE PORTID = :idPort
+                                AND MESSAGEID = '1002' AND ACUSE LIKE 'Recibido%' AND PORTID IN (
+                                    SELECT PORTID
+                                    FROM SPN_MSJ
+                                    WHERE PORTID = :idPort AND MESSAGEID NOT IN ('3002', '1091', '1092', '9999')
+                                    AND ROWNUM < 2
+                                )");
         oci_bind_by_name($stid, ":idPort", $idPort);
         oci_execute($stid);
 
@@ -40,27 +57,69 @@ try {
             $xmlmsg = $row['XMLMSG'];
         }
 
-        if ($xmlmsg !== "") {
-            
-            $xmlmsgAux = simplexml_load_string($xmlmsg); #new SimpleXMLElement($xmlmsg);
-        
+        if($xmlmsg == ""){
+            $stid = oci_parse($conn, "SELECT ID, FECHA, SENDER, PORTID, PORTID_AUX, NOTA, MESSAGEID, ACUSE, XMLMSG 
+                                FROM SPN_MSJ
+                                WHERE PORTID = :idPort
+                                AND MESSAGEID = '1001' AND ACUSE LIKE 'Recibido%' AND PORTID IN (
+                                    SELECT PORTID
+                                    FROM SPN_MSJ
+                                    WHERE PORTID = :idPort AND MESSAGEID NOT IN ('3002', '1091', '1092', '9999')
+                                    AND ROWNUM < 2
+                                )");
+            oci_bind_by_name($stid, ":idPort", $idPort);
+            oci_execute($stid);
 
-            $portType = $xmlmsgAux->NPCMessage->PortToBeScheduled[0]->PortType ;
-            $SubscriberType = $xmlmsgAux->NPCMessage->PortToBeScheduled[0]->SubscriberType ;
-            $RecoveryFlagType = $xmlmsgAux->NPCMessage->PortToBeScheduled[0]->RecoveryFlagType ;
-            $DIDA = $xmlmsgAux->NPCMessage->PortToBeScheduled[0]->DIDA ;
-            $DCR = $xmlmsgAux->NPCMessage->PortToBeScheduled[0]->DCR ;
-            $TotalPhoneNums = $xmlmsgAux->NPCMessage->PortToBeScheduled[0]->TotalPhoneNums ;
-
-            foreach ($xmlmsgAux->NPCMessage->PortToBeScheduled[0]->Numbers[0]->NumberRange as $item) {
-                $numberRange .= "<NumberRange>\n<NumberFrom>".$item->NumberFrom."</NumberFrom>\n"."<NumberTo>".$item->NumberTo."</NumberTo>\n</NumberRange>\n";
-                
+            while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
+                $xmlmsg = $row['XMLMSG'];
             }
 
+            $xmlmsgAux = simplexml_load_string($xmlmsg); #new SimpleXMLElement($xmlmsg);
+            
+            // 1001 -> PortRequest
+            // 1002 -> PortRequestAck
+            // 1005 -> PortToBeScheduled
+            $portType = $xmlmsgAux->NPCMessage->PortRequest->PortType ;
+            $SubscriberType = $xmlmsgAux->NPCMessage->PortRequest->SubscriberType ;
+            $RecoveryFlagType = $xmlmsgAux->NPCMessage->PortRequest->RecoveryFlagType ;
+            $DIDA = $getDida;
+            $DCR = $getDcr;
+            $TotalPhoneNums = $xmlmsgAux->NPCMessage->PortRequest->TotalPhoneNums ;
 
-            #close connection
-            oci_close($conn);
-    
+            foreach ($xmlmsgAux->NPCMessage->PortRequest->Numbers[0]->NumberRange as $item) {
+                $numberRange .= "<NumberRange>\n<NumberFrom>".$item->NumberFrom."</NumberFrom>\n"."<NumberTo>".$item->NumberTo."</NumberTo>\n</NumberRange>\n";
+            }
+
+        } else {
+            $xmlmsgAux = simplexml_load_string($xmlmsg); #new SimpleXMLElement($xmlmsg);
+            
+            // 1001 -> PortRequest
+            // 1002 -> PortRequestAck
+            // 1005 -> PortToBeScheduled
+            $portType = $xmlmsgAux->NPCMessage->PortRequestAck->PortType ;
+            $SubscriberType = $xmlmsgAux->NPCMessage->PortRequestAck->SubscriberType ;
+            $RecoveryFlagType = $xmlmsgAux->NPCMessage->PortRequestAck->RecoveryFlagType ;
+            $DIDA = $xmlmsgAux->NPCMessage->PortRequestAck->DIDA ;
+            $DCR = $xmlmsgAux->NPCMessage->PortRequestAck->DCR ;
+            $TotalPhoneNums = $xmlmsgAux->NPCMessage->PortRequestAck->TotalPhoneNums ;
+
+            foreach ($xmlmsgAux->NPCMessage->PortRequestAck->Numbers[0]->NumberRange as $item) {
+                $numberRange .= "<NumberRange>\n<NumberFrom>".$item->NumberFrom."</NumberFrom>\n"."<NumberTo>".$item->NumberTo."</NumberTo>\n</NumberRange>\n";
+            }
+
+        }
+
+        #close connection
+        oci_close($conn);
+
+        if($DIDA == "" || $DCR == ""){
+            $resp = array('xmlmsg'=>'Error: DIDA or DCR is empty');
+            echo json_encode($resp);
+            exit();
+        } else {
+            // $xml = $xmlmsgAux->asXML();
+            // $xml = $xmlmsgAux;
+
             $xml = "<NPCData>\n" .
                     "<MessageHeader>\n" .
                         "<TransTimestamp>".$TransTimestamp."</TransTimestamp>\n" .
@@ -117,24 +176,22 @@ try {
             curl_setopt($ch, CURLOPT_POSTFIELDS, $request);
             curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
             //tipo de autorización
-            //curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_NTLM);//NTLM para webservices con dominios de windows
-            //curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);//AUTH BASIC para este caso
-            //curl_setopt($ch, CURLOPT_USERPWD, 'lucio:lucio'); //usuario:contraseña
+            // curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_NTLM);//NTLM para webservices con dominios de windows
+            // curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);//AUTH BASIC para este caso
+            // curl_setopt($ch, CURLOPT_USERPWD, 'lucio:lucio'); //usuario:contraseña
 
-            $response = curl_exec($ch); 
-        }else{
-            $xmlmsg = "Error PortID";
+            $response = curl_exec($ch);
         }
     }
 
     #echo htmlentities($xml);
-    $resp = array('xml'=>$xml,'portid'=>$idPort,'response'=>$response,'countX'=>$countX,'msg'=>'Success','xmlmsg'=>$xmlmsg); 
+    $resp = array('xml'=>$xml,'portid'=>$idPort,'response'=>$response,'msg'=>'Success','xmlmsg'=>$xmlmsg, 'statusMsg'=>intval($statusMsg)); 
     echo json_encode($resp);
     #echo $arrayListado[1][0];
     #echo $xml;
     #$resp = array('countX'=>$countX);
     #echo json_encode($resp);
-    } catch (\Throwable $th) {
+} catch (\Throwable $th) {
 
     #$resp = array('xml'=>$request,'portid'=>$portid,'folioID'=>$folioID, 'TotalPhoneNums'=>$TotalPhoneNums,'msg'=>'Execution Error');
     $resp = array('msg'=>'Execution Error');

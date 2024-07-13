@@ -19,6 +19,13 @@ if(isset($_POST['signinBtn'])){
   $config['baseSearch'] = 'dc=izzitelecom,dc=net';
   $config['columnaLdap'] = 'cn,mail';
 
+  // 'SPNDESARROLLO=(DESCRIPTION=(
+  //     ADDRESS=(PROTOCOL=TCP)
+  //     (HOST=etalides.izzitelecom.net)
+  //     (PORT=1595))
+  //     (CONNECT_DATA=(SERVER=DEDICATED)
+  //     (SERVICE_NAME=spndesarrolloservice.izzitelecom.net)
+  // ))'
 
 /*
   // conexión al servidor LDAP

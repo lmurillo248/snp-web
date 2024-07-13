@@ -11,6 +11,19 @@
 //
 // * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
+
+
+// notas: °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
+// para compilar los archivos scss a css se debe ejecutar el siguiente comando en la consola:
+// (obtenidos desde https://gulpjs.com/docs/en/getting-started/quick-start)
+// 
+// npm install --global gulp-cli
+// npm install --save-dev gulp
+// #para saber que tareas se pueden ejecutar con gulp:
+// gulp --tasks
+// gulp compile-scss
+
+
 // Bootstrap Functions
 @import "argon-dashboard/bootstrap/functions";
 
