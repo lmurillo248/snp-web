@@ -20265,7 +20265,9 @@ hr.horizontal.gray-light {
 
 .conTableY {
   display: none;
-  height: 300px;
+  height: -moz-fit-content;
+  height: fit-content;
+  max-height: 8rem;
   overflow-y: scroll;
 }
 

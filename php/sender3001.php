@@ -11,6 +11,7 @@ try {
     $MessageID = 3001;
     #ido 102
     $ido = substr($idPort,0,3);
+    $year = substr($idPort,3,3);
     #folio
     $folioID = $ido.$fechaTimeStamp.rand(0,9);
     #timestamp
@@ -22,6 +23,14 @@ try {
     $xml = "";
     $statusMsg = "";
     $response = false;
+    $xmlmsgAux = "";
+
+    $currentDate = date("Y-m-d");
+    $portedDate = "";
+    $daysBetweenDates = "";
+    $portDateymd = "";
+    $portDateFormat = "";
+    $diffDate = "";
 
     // $stidX = oci_parse($conn, "SELECT PORTID,PORTEXECDATE,REQPORTEXECDATE FROM SPN_MSJ_1006  WHERE PORTID = :idPort");
     $stidX = oci_parse($conn, "SELECT ID, FECHA, SENDER, PORTID, PORTID_AUX, NOTA, MESSAGEID, ACUSE, XMLMSG
@@ -36,8 +45,33 @@ try {
     }
     
     $countX = oci_fetch_all($stidX, $resultSet, 0, -1, OCI_FETCHSTATEMENT_BY_ROW);
+    
+    
+    
 
     if (intval($statusMsg) < 1008 && intval($statusMsg) > 0) {
+        if(intval($statusMsg) == 1007 || intval($statusMsg) == 1006) {
+            $stidProg = oci_parse($conn, "SELECT PORTID,PORTEXECDATE,REQPORTEXECDATE FROM SPN_MSJ_1006  WHERE PORTID = :idPort");
+    
+            oci_bind_by_name($stidProg, ":idPort", $idPort);
+            oci_execute($stidProg);
+            while ($row = oci_fetch_array($stidProg, OCI_ASSOC+OCI_RETURN_NULLS)) {
+                $portedDate = $row['PORTEXECDATE'];
+            }
+            $portDateymd = substr($portedDate,0,8);
+            // Crear un objeto DateTime a partir del formato específico
+            $portDateObject = DateTime::createFromFormat('Ymd', $portDateymd);
+            // Formatear la fecha al formato deseado YYYY-MM-DD
+            $portDateFormat = $portDateObject->format('Y-m-d');
+            $diffDate = abs(strtotime($currentDate) - strtotime($portDateFormat));
+            $daysBetweenDates = floor($diffDate / (60 * 60 * 24));
+            if($daysBetweenDates < 1){
+                $resp = array('xmlmsg'=>'Error: porting schedule completed');
+                echo json_encode($resp);
+                exit();
+            }
+        }
+        // && (intval($statusMsg) == 1007 && $daysBetweenDates < 1)
         
         // $stid = oci_parse($conn, "SELECT ID, FECHA, SENDER, PORTID, PORTID_AUX, NOTA, MESSAGEID, ACUSE, XMLMSG 
         //                                 FROM SPN_MSJ WHERE PORTID = :idPort AND MESSAGEID = '1005'");
@@ -185,7 +219,7 @@ try {
     }
 
     #echo htmlentities($xml);
-    $resp = array('xml'=>$xml,'portid'=>$idPort,'response'=>$response,'msg'=>'Success','xmlmsg'=>$xmlmsg, 'statusMsg'=>intval($statusMsg)); 
+    $resp = array('xml'=>$xml,'portid'=>$idPort,'response'=>$xmlmsgAux,'msg'=>'Success','xmlmsg'=>$xmlmsg, 'statusMsg'=>intval($statusMsg)); 
     echo json_encode($resp);
     #echo $arrayListado[1][0];
     #echo $xml;

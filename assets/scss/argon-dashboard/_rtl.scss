@@ -140,7 +140,8 @@
 }
 .conTableY{
   display: none;
-  height: 300px;
+  height: fit-content;
+  max-height: 8rem;
   overflow-y: scroll;
 }
 .conTableY::-webkit-scrollbar {

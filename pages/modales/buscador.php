@@ -12,7 +12,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-8">
-                        <input type="number" class="form-control" placeholder="Ingrese PortID o DN" id="PortIdBuscar" name="PortIdBuscar">
+                        <input type="number" class="form-control" placeholder="Ingrese PortID, DN o número telefónico" id="PortIdBuscar" name="PortIdBuscar">
                     </div>
                     <div class="col-md-4">
                         <button type="button" class="btn btn-primary" id="buscaPortId">Buscar</button>

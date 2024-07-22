@@ -136,7 +136,7 @@ $btnLimpiarE.addEventListener("click", () => {
 });
 
 function clearTable(tabla, idComponente){
-    tabla.querySelector('tbody').innerHTML = "";
+    tabla.innerHTML = "";
     document.getElementById(idComponente).value = "";
 }
 

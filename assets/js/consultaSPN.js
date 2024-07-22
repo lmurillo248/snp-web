@@ -44,6 +44,9 @@ btnConsultar.addEventListener('click', async ()=>{
     });
 });
 
+// document.getElementById('idPort').addEventListener('change', function() {
+//     document.getElementById('txtDate').value = "";
+// });
 document.querySelector('#programar').addEventListener('click', async ()=>{
 
     let txFecha = document.querySelector('#txtdate').value;
@@ -85,6 +88,8 @@ document.querySelector('#programar').addEventListener('click', async ()=>{
                         '<p style="color:#28a745">El PortID ha sido enviado al ABD con éxito</p>',
                         footer: '<h4 style="color:#28a745">Operación Exitosa</h4>'
                     });
+                    document.querySelector('#txtdate').value = '';
+                    document.querySelector('#idPort').value = '';
                     
                 }else{
                     return Swal.fire("Warning","Error en la ejecución del programa","warning");
@@ -130,15 +135,17 @@ document.querySelector('#btnIdPortDelete').addEventListener('click', async ()=>{
         ProcessConsulta(data,"../php/sender3001.php").then(res =>{
             console.log(res);
             swal.close();
-            if (res == false || res.msg === 'Execution Error') {
+            if (res == false && res.msg === 'Execution Error') {
                 return Swal.fire("Warning","Error al enviar el mensaje, vuelva a intentarlo","warning");
             } else {
                 if (res.statusMsg < 1001) {
-                    return Swal.fire("Warning","No se encontró el PortID que desea cancelar","warning");
+                    return Swal.fire("Warning","No se encontró la solicitud que desea cancelar","warning");
+                } else if(res.xmlmsg == 'Error: porting schedule completed'){
+                    return Swal.fire("Warning",`Es posible que la solicitud se encuentre portada, cumplió con su fecha programada`,"warning");
                 } else if(res.statusMsg > 1007){
-                    return Swal.fire("Warning",`El PortId se encuentra en un estado ${res.statusMsg}`,"warning");
+                    return Swal.fire("Warning",`No es posible cancelar la solicitud, la solicitud se encuentra en un estado ${res.statusMsg}`,"warning");
                 } else if(res.xmlmsg == "Error: DIDA or DCR is empty"){
-                    return Swal.fire("Warning","El PortId se encuentra en un estado 1001, necesita colocar el DIDA y DCR","warning");
+                    return Swal.fire("Warning","La solicitud se encuentra en un estado 1001, necesita colocar el DIDA y DCR","warning");
                 } else if (res.response !== false) {
                     Swal.fire({
                         icon: 'success',
@@ -198,6 +205,7 @@ btnBuscarPortid.addEventListener('click', async ()=>{
                     if (res.tableConsultaPort !== "" && res.countX == 0){
                     //if (res.countX === 0) {
                         document.querySelector('#txtdate').style.display = "inline";
+                        document.querySelector('#txtdate').value = "";
                         document.querySelector('#programar').style.display = "inline";
                     } else {
                         document.querySelector('#txtdate').style.display = "none";

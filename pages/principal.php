@@ -65,7 +65,7 @@ if (isset($_SESSION['usuario'])) {
       </a>
     </div>
     <hr class="horizontal dark mt-0">
-    <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
+    <div class="collapse navbar-collapse  w-auto h-auto" id="sidenav-collapse-main">
       <ul class="navbar-nav">
         <li class="nav-item" id="btnSearch">
           <a class="nav-link" style="cursor: pointer;">
@@ -212,13 +212,13 @@ if (isset($_SESSION['usuario'])) {
               <div class="row">
                 <div class="col-8">
                   <div class="numbers">
-                    <p class="text-sm mb-0 text-uppercase font-weight-bold">date</p>
+                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Fecha</p>
                     <h5 class="font-weight-bolder" id="fechaEntregado">
                       
                     </h5>
                     <p class="mb-0">
-                      <span class="text-success text-sm font-weight-bolder">Schedule</span>
-                      Today
+                      <span class="text-success text-sm font-weight-bolder">Form.</span>
+                      AAAA-MM-DD
                     </p>
                   </div>
                 </div>
@@ -237,13 +237,13 @@ if (isset($_SESSION['usuario'])) {
               <div class="row">
                 <div class="col-8">
                   <div class="numbers">
-                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Time</p>
+                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Horario</p>
                     <h5 class="font-weight-bolder" id="reloj">
                       
                     </h5>
                     <p class="mb-0">
-                      <span class="text-success text-sm font-weight-bolder">Current</span>
-                      Time
+                      <span class="text-success text-sm font-weight-bolder">Formato</span>
+                      HH:MM:SS
                     </p>
                   </div>
                 </div>
@@ -262,11 +262,11 @@ if (isset($_SESSION['usuario'])) {
               <div class="row">
                 <div class="col-8">
                   <div class="numbers">
-                    <p class="text-sm mb-0 text-uppercase font-weight-bold">buscador</p>
+                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Buscador</p>
                       <button class="form-control" style="padding: 6px" data-bs-toggle="modal" data-bs-target="#exampleModalBuscador">Búsqueda Avanzada</button>
                     <p class="mb-0">
-                      <span class="text-success text-sm font-weight-bolder">Search</span>
-                      Engine
+                      <span class="text-success text-sm font-weight-bolder">Busqueda</span>
+                      Tel/PortId
                     </p>
                   </div>
                 </div>
@@ -555,10 +555,10 @@ if (isset($_SESSION['usuario'])) {
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-md-12 conTableY" id="conTable">
+                  <div class="col-md-12 mb-4 conTableY" id="conTable">
                     <div class="table-responsive">
                       <div id="paginador"></div>
-                      <table class="table table-bordered" id="tablePhoneId">
+                      <table class="table table-bordered mb-0" id="tablePhoneId">
                         <thead>
                           <tr></tr>
                         </thead>
@@ -807,7 +807,7 @@ if (isset($_SESSION['usuario'])) {
                 <div class="col-md-12 conTableYE" id="conTableDos">
                   <div class="table-responsive">
                     <div id="paginador"></div>
-                    <table class="table table-bordered" id="tablePhoneIdDos">
+                    <table class="table table-bordered mb-0" id="tablePhoneIdDos">
                       <thead>
                         <tr></tr>
                       </thead>
@@ -959,7 +959,7 @@ if (isset($_SESSION['usuario'])) {
             <div class="row">
               <div class="col-md-8">
                 <div class="form-group">
-                  <input type="date-timelocal" class="form-control" style="display: none;" id="txtdate"
+                  <input type="date-timelocal" class="form-control" style="display: none;" value="" id="txtdate"
                     placeholder="Programar Fecha">
                 </div>
               </div>
@@ -1092,6 +1092,38 @@ if (isset($_SESSION['usuario'])) {
         mensajeConsulta.style.display = "none";
         mensajeConsultaProgramables.style.display = "none";
         //mensaje.classList.toggle("item1");
+
+
+        
+        document.getElementById("donador").value = 'A definir por el ABD';
+        document.querySelector('#ido').value = "102";
+        document.querySelector('#PortType').value = "8";
+        document.getElementById('numeroFrom').value = "";
+        document.getElementById('numeroTo').value = "";
+        document.getElementById('nip').value = "";
+        document.getElementById('comentarios').value = "";
+        document.getElementById('docSizeOne').value = "";
+        document.getElementById('docSizeTwo').value = "";
+        document.getElementById('docSizeThree').value = "";
+        document.getElementById('docSizeFour').value = "";
+        document.getElementById('selectDocumentOne').value = "";
+        document.getElementById('selectDocumentTwo').value = "";
+        document.getElementById('selectDocumentThree').value = "";
+        document.getElementById('selectDocumentFour').value = "";
+        document.getElementById('formFileSmIdentifica').value = "";
+        document.getElementById('formFileSmSolOriginal').value = "";
+        document.getElementById('formFileSmJurada').value = "";
+        document.getElementById('formFileSmRecovery').value = "";
+        document.getElementById('excelFile').value = "";
+        document.getElementById('tablePhoneId').innerHTML = "";
+        document.querySelector('#exampleRadios1').checked = true;
+        document.querySelector('#exampleRadios2').checked = false;
+        document.querySelector('#exampleRadios3').checked = false;
+        document.querySelector('#exampleRadios4').checked = true;
+        document.querySelector('#exampleRadios5').checked = false;
+        document.querySelector('#conTable').style.display = "none";
+        numeroFisica();
+        btnEnviar.disabled = false;
       }
     });
 
