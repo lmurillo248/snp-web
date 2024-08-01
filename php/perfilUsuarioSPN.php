@@ -28,8 +28,8 @@ try {
     if ($row == 0) {
         #inserta
         $stid = oci_parse($conn, "INSERT INTO SPN_MSJ_USUARIOS(IDUSUARIO, USUARIO, NOMBRE, APELLIDOP, APELLIDOM, EMAIL, PERFIL, STATUS)
-                                    VALUES (SPN_MSJ_USUARIOS_ID_SEQ.NEXTVAL,:userPerfil,:userEmail,:firstName,:FirstlastName,
-                                            :SecondlastName,:selectPerfil,:activo)");
+                                    VALUES (SPN_MSJ_USUARIOS_ID_SEQ.NEXTVAL,:userPerfil,:firstName,:FirstlastName,
+                                            :SecondlastName,:userEmail,:selectPerfil,:activo)");
                                         
         #oci_bind_by_name($stid, ":idUsuario", $idUsuario);
         oci_bind_by_name($stid, ":userPerfil", $userPerfil);

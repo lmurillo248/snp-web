@@ -2,9 +2,9 @@ document.querySelector('#activarPerfil').addEventListener('click', async ()=>{
 
     let txUsuario = document.querySelector('#userPerfil').value;
     let txEmail = document.querySelector('#userEmail').value;
-    let txNombre = document.querySelector('#firstName').value;
-    let txApellidoP = document.querySelector('#FirstlastName').value;
-    let txApellidoM = document.querySelector('#SecondlastName').value;
+    let txNombre = removeSpecialCharacters(document.querySelector('#firstName').value);
+    let txApellidoP = removeSpecialCharacters(document.querySelector('#FirstlastName').value);
+    let txApellidoM = removeSpecialCharacters(document.querySelector('#SecondlastName').value);
     let txPerfil = document.querySelector('#selectPerfil').value;
     let activo = 1;
     let showLoading = function(){
