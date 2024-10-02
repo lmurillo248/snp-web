@@ -38,7 +38,7 @@ class Row{
 class ExcelPrinter{
     static print(tableId, excel){
         const table = document.getElementById(tableId);
-        console.log(table);
+        // console.log(table);
         /* excel.header().forEach(title => {
             table.querySelector("thead>tr").innerHTML += `<td>${title}</td>`
         }); */
@@ -82,9 +82,9 @@ class ExcelPrinter{
                     </tr>
                 `
             }
-            console.log(excel.rows().get(index).Telefonos());
-            console.log(excel.rows().get(index));
-            console.log(excel.rows().get(index));
+            // console.log(excel.rows().get(index).Telefonos());
+            // console.log(excel.rows().get(index));
+            // console.log(excel.rows().get(index));
         }
     }
 }
@@ -98,8 +98,8 @@ appExcel.addEventListener('change', async function () {
     document.getElementById('numeroFrom').value = "";
     document.getElementById('numeroTo').value = "";
     console.log(ExcelPrinter.print('tablePhoneId',excel));
-    console.log(portabilidadexcel.rows().rows);
-    console.log(portabilidadexcel.rows().first().Telefonos());
+    // console.log(portabilidadexcel.rows().rows);
+    // console.log(portabilidadexcel.rows().first().Telefonos());
 });
 
 const appExcelEliminar = document.getElementById('excelFileEliminacion');
@@ -109,8 +109,8 @@ appExcelEliminar.addEventListener('change', async function () {
 
     const excel = new PortabilidadExcel(content);
     console.log(ExcelPrinter.print('tablePhoneIdDos',excel));
-    console.log(portabilidadexcel.rows().rows);
-    console.log(portabilidadexcel.rows().first().Telefonos());
+    // console.log(portabilidadexcel.rows().rows);
+    // console.log(portabilidadexcel.rows().first().Telefonos());
 });
 
 // Obtenemos una referencia al elemento
@@ -145,7 +145,7 @@ $numeroPara.addEventListener("change", () => {
         $elemento.innerHTML = "";
         document.getElementById('excelFile').value = "";
         tablaY.style.display = "none";
-    } else if (document.getElementById('numeroFrom').value = ""){
+    } else if (document.getElementById('numeroFrom').value == ""){
         const excel = new PortabilidadExcel(content);
     }
 });

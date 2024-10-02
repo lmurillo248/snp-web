@@ -141,7 +141,7 @@ btnEliminarNumero.addEventListener('click', async () => {
 async function ProcessElimination(formdata){
     let url = '../php/eliminarNumero.php';
 
-    console.log(...formdata);
+    // console.log(...formdata);
 
     let res = await fetch(url, {
     method: "POST",

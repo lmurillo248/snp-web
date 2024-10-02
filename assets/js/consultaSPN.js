@@ -133,7 +133,7 @@ document.querySelector('#btnIdPortDelete').addEventListener('click', async ()=>{
         data.append("getDcr",getDcr);
         
         ProcessConsulta(data,"../php/sender3001.php").then(res =>{
-            console.log(res);
+            // console.log(res);
             swal.close();
             if (res == false && res.msg === 'Execution Error') {
                 return Swal.fire("Warning","Error al enviar el mensaje, vuelva a intentarlo","warning");
@@ -162,7 +162,7 @@ document.querySelector('#btnIdPortDelete').addEventListener('click', async ()=>{
             }
         });
     }else{
-        return Swal.fire("Warning","El campo de PortID debe contener un dígito de 21 números","warning");
+        return Swal.fire("Warning","El campo de PortID debe contener un número de 21 dígitos","warning");
     }
 
 });

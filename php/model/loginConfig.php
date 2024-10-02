@@ -33,7 +33,7 @@ if(isset($_POST['signinBtn'])){
 
 	if ($ldapconn) {
 		// realizando la autenticación
-		$ldapbind = ldap_bind($ldapconn, $config['usuario'], $config['pass']) or die("Error trying to bind: " . ldap_error($ldapconn));
+		$ldapbind = ldap_bind($ldapconn, $config['usuario'], $config['pass']) or die("Tu contraseña no es valida. Error: " . ldap_error($ldapconn));
 
  
 
@@ -46,7 +46,7 @@ if(isset($_POST['signinBtn'])){
 			
 
  
-		  $result = ldap_search($ldapconn, $ldaptree, $search) or die ("Error in search query: ".ldap_error($ldapconn));
+		  $result = ldap_search($ldapconn, $ldaptree, $search) or die ("Es posible que su correo esté mal escrito. Error: ".ldap_error($ldapconn));
 
 		  $data = ldap_get_entries($ldapconn, $result);
 		  

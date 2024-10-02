@@ -719,7 +719,7 @@ if (isset($_SESSION['usuario'])) {
               <div class="card-header pb-0">
                 <div class="d-flex align-items-center row">
                   <p class="mb-0 col-md-4">Cancelar PortID:</p>
-                  <p class="mb-0 col-md-4">Opcional:</p>
+                  <p class="mb-0 col-md-4">Para cancelar estatus 1001 proporcione:</p>
                 </div>
                 <!-- ---------------------------------------------------------------------------------- -->
                 <div class="d-flex align-items-center">

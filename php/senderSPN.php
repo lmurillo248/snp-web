@@ -171,8 +171,10 @@ try {
 			"</NPCMessage>\n" .
 		"</NPCData>\n";
 		#$xmlEntitize = $xmlHeader.str_replace("'","&quot;",str_replace(">","&gt;",str_replace("<","&lt;",$xml)));
-		
-		$location = "http://172.28.108.181:7001/spn/spnService?WSDL";
+
+		// $location = "http://172.28.108.181:7001/spn/spnService?WSDL";
+		$location = "http://172.28.108.182:7001/spn/spnService?WSDL";
+		// $location = "http://172.21.151.77:7001/spn/spnService?WSDL";
 		
 		$request = '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:spn="https://bmartinezc:7001/spnService">
 						<soapenv:Header/>
@@ -205,6 +207,7 @@ try {
 		$response = curl_exec($ch);//aquí se guarda la respuesta cuando es exitoso, cuando no se procesa correctamente devuelve false.
 
 	#echo htmlentities($xml);
+	$response = $xml;
 	$resp = array('xml'=>$response,'portid'=>$portid,'folioID'=>$folioID, 'TotalPhoneNums'=>$TotalPhoneNums,'fechaTimeStamp'=> $fechaTimeStamp,'msg'=>'Success', 'xmlmsg'=>$xml);
 	echo json_encode($resp);
 	#echo $arrayListado[1][0];

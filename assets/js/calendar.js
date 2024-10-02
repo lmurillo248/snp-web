@@ -74,7 +74,7 @@ class Calendar{
         //con esta función se puede obtener la fecha del dom para enviarla para programar.
         this.element.addEventListener('click', (e) => {
             if (e.target.classList.contains('date')) {
-                console.log(e.target.title);
+                // console.log(e.target.title);
                 const params = e.target.title.split('-').map(str => parseInt(str, 10));
                 this.#setDate(...params);
             }
@@ -110,9 +110,9 @@ class Calendar{
         datesEL.innerHTML = '';
 
         const dayCountInCurrentMonth = this.#getDayCount(this.#year, this.#month);
-        console.log('dayCountInCurrentMonth',dayCountInCurrentMonth);
+        // console.log('dayCountInCurrentMonth',dayCountInCurrentMonth);
         const firstDayInCurrentMonth = this.#getFirstDay();
-        console.log('firstDayInCurrentMonth',firstDayInCurrentMonth);
+        // console.log('firstDayInCurrentMonth',firstDayInCurrentMonth);
 
         const { lastMonth, yearOfLastMonth, dayCountOfLastMonth} = this.#getLastMonthInfo();
         const { nextMonth, yearOfNextMonth } = this.#getNextMonthInfo();
