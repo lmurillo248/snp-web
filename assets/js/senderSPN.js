@@ -12,7 +12,7 @@ let fileSizeFour = 0;
 const sizeValidate = (file, identificador, docSelector)=>{
     let id = document.getElementById(identificador);
     // let fileSize = (idFile.size)/(1024*1024);
-    // console.log(file.size);
+    console.log(file.size);
     if(file.size > 4 * 1024 * 1024) {
         id.value = '';
     	Swal.fire("Warning","Los archivos no pueden valer más de 4 Mega bytes de tamaño","warning");
@@ -363,7 +363,7 @@ btnEnviar.addEventListener('click', async ()=>{
     //----------------------------------------AQUÍ EMPIEZA LA FUNCIÓN QUE PROCESA PARA EL PHP-------------------------------
     //call api->php
     ProcessSender(data).then(res =>{
-        // console.log(res);
+        console.log(res);
         if (res === false || res.xml === false) {
             return Swal.fire("Warning","Error, el proceso se interrumpió; vuelva a intentarlo","warning");
         }else{
@@ -430,7 +430,7 @@ btnEnviar.addEventListener('click', async ()=>{
 
 async function ProcessSender(formdata){
     let url = '../php/senderSPN.php';
-    // console.log(...formdata);
+    console.log(...formdata);
     let res = await fetch(url, {
     method: "POST",
     body: formdata,
@@ -440,12 +440,12 @@ async function ProcessSender(formdata){
     })
     if (res.ok){
         let text = await res.json();// res.text()
-        // console.log(text.xml);
+        console.log(text.xml);
         
         //alert(filasrecorridas);
         return text;
     }else{
-        // console.log(res.status);
+        console.log(res.status);
         alert("Ocurrió un error en la red, vuelva a intentar.");
         return false;
     }

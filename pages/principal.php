@@ -18,8 +18,8 @@ if (isset($_SESSION['usuario'])) {
     }
     $stid = oci_parse($conn, "SELECT IDO, EMPRESA FROM SPN_MSJ_RECEPTORA WHERE IDO = 102 ORDER BY IDO ASC");
     oci_execute($stid);
-    $stidFix = oci_parse($conn, "SELECT  * FROM SPN_MSJ_TIPO_PORT ORDER BY TIPO_DE_PORTACION ASC");
-    // $stidFix = oci_parse($conn, "SELECT  * FROM SPN_MSJ_TIPO_PORT WHERE TIPO_DE_PORTACION NOT LIKE '%PP%' ORDER BY TIPO_DE_PORTACION ASC");
+    // $stidFix = oci_parse($conn, "SELECT  * FROM SPN_MSJ_TIPO_PORT ORDER BY TIPO_DE_PORTACION ASC");
+    $stidFix = oci_parse($conn, "SELECT  * FROM SPN_MSJ_TIPO_PORT WHERE TIPO_DE_PORTACION NOT LIKE '%PP%' ORDER BY TIPO_DE_PORTACION ASC");
     oci_execute($stidFix);
   } catch (\Throwable $th) {
     //throw $th;
@@ -74,6 +74,15 @@ if (isset($_SESSION['usuario'])) {
               <i class="ni ni-mobile-button text-primary text-sm opacity-10"></i>
             </div>
             <span class="nav-link-text ms-1">Portabilidad Red</span>
+          </a>
+        </li>
+        <li class="nav-item" id="btnPrevalidation">
+          <a class="nav-link" style="cursor: pointer;">
+            <div
+              class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="ni ni-paper-diploma text-sm opacity-10" style="color: brown;"></i>
+            </div>
+            <span class="nav-link-text ms-1">Prevalidación</span>
           </a>
         </li>
         <!-- <li class="nav-item" id="btnSearchInternet">
@@ -580,6 +589,116 @@ if (isset($_SESSION['usuario'])) {
           </div>
         </div>
       </div>
+
+      <div class="row mt-4">
+        <div class="col-lg-12 mb-lg-0 mb-4 item10">
+          <div class="card z-index-2 h-100">
+            <div class="card-header pb-0 pt-3 bg-transparent">
+              <div class="row">
+                <div class="col-md-6">
+                  <h6 class="text-capitalize">Prevalidación</h6>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="card-header p-0">
+                <div class="d-flex align-items-center">
+                  <p class="mb-3">Datos</p>
+                </div>
+                <!-- <hr class="horizontal dark my-3"> -->
+                <div class="row">
+                  <div class="col-md-4">
+                    <label for="excelFilePrevalNum" class="form-label">Ingreso de número individual.</label>
+                    <div class="input-group">
+                      <input type="number" class="form-control" placeholder="5512438522" id="inputNumPrevalNum">
+                      <button class="btn btn-primary input-group-text m-0" id="addNumPrevalNum">Agregar Num</button>
+                      <span class="text-warning" id="alertPrevalNum" hidden></span>
+                    </div>
+                  </div>
+                </div>
+                <div class="row pt-4">
+                  <div class="col-md-6">
+                  <label for="excelFilePrevalNum" class="form-label">Ingreso de lote de números.</label>
+                    <input type="file" class="form-control" id="excelFilePrevalNum"  accept=".xlsx">
+                    <!-- ,.csv,.xls,.xml,.txt -->
+                  </div>
+                </div>
+                <div class="row px-2 py-4 justify-content-end">
+                  <div class="col-md-2 align-self-center text-end">
+                    <button class="btn btn-primary m-0" id="sendPrevalNum" value="Validar">Validar</button>
+                  </div>
+                  <div class="col-md-2 align-self-center text-center">
+                    <button class="btn btn-primary m-0" id="cleanTablePrevalNum">Limpiar</button>
+                  </div>
+                </div>
+
+                <div class="row pt-4" id="conTablePrevalNum" hidden>
+                  <div class="col-md-3"></div>
+                  <div class="col-md-6 mb-4">
+                    <div class="table-responsive" style="max-height: 75vh">
+                      <table class="table table-bordered table-striped table-hover mb-0 text-center" id="tablePrevalNum">
+                        <thead>
+                          <tr>
+                            <th>Número</th>
+                            <th>Eliminar</th>
+                          </tr>
+                        </thead>
+                        <tbody id="tbodyPrevalNum">
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+                <div class="row pt-4" id="conTablePrevalNumFound" hidden>
+                  <div class="col-md-1"></div>
+                  <div class="col-md-8 mb-4">
+                    <div class="table-responsive" style="max-height: 75vh">
+                      <table class="table table-bordered table-striped table-hover mb-0 text-center" id="tablePrevalNumFound">
+                        <thead id="theadPrevalNumFound">
+                          <tr><th colspan="3" class="bg-success text-light">ENCONTRADOS</th></tr>
+                          <tr>
+                            <th>Número</th>
+                            <th>Operador</th>
+                            <th>Compañía</th>
+                          </tr>
+                        </thead>
+                        <tbody id="tbodyPrevalNumFound"></tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div class="col-md-2 align-self-center text-center">
+                    <button class="btn btn-primary m-0 form-control" id="downloadTblPrevalNumFound" type="button">
+                      <i class="ni ni-cloud-download-95"></i>
+                      Descargar
+                    </button>
+                  </div>
+                </div>
+                <div class="row pt-4" id="conTablePrevalNumReject" hidden>
+                  <div class="col-md-2"></div>
+                  <div class="col-md-6 mb-4">
+                    <div class="table-responsive" style="max-height: 75vh">
+                      <table class="table table-bordered table-striped table-hover mb-0 text-center" id="tablePrevalNumReject">
+                        <thead id="theadPrevalNumReject">
+                          <tr><th colspan="1" class="bg-warning">NUMEROS RECHAZADOS</th></tr>
+                        </thead>
+                        <tbody id="tbodyPrevalNumReject"></tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div class="col-md-2 align-self-center text-center">
+                    <button class="btn btn-primary m-0 form-control" id="downloadTblPrevalNumReject" type="button">
+                      <i class="ni ni-cloud-download-95"></i>
+                      Descargar
+                    </button>
+                  </div>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="row mt-4">
         <div class="col-lg-12 item3">
           <div class="card">
@@ -719,7 +838,7 @@ if (isset($_SESSION['usuario'])) {
               <div class="card-header pb-0">
                 <div class="d-flex align-items-center row">
                   <p class="mb-0 col-md-4">Cancelar PortID:</p>
-                  <p class="mb-0 col-md-4">Para cancelar estatus 1001 proporcione:</p>
+                  <p class="mb-0 col-md-4">Para Portaciones en estado 1001:</p>
                 </div>
                 <!-- ---------------------------------------------------------------------------------- -->
                 <div class="d-flex align-items-center">
@@ -806,7 +925,7 @@ if (isset($_SESSION['usuario'])) {
               <div class="row">
                 <div class="col-md-12 conTableYE" id="conTableDos">
                   <div class="table-responsive">
-                    <div id="paginador"></div>
+                    <div id="paginadorDos"></div>
                     <table class="table table-bordered mb-0" id="tablePhoneIdDos">
                       <thead>
                         <tr></tr>
@@ -1019,6 +1138,7 @@ if (isset($_SESSION['usuario'])) {
   <script src="../assets/js/appExcel.js"></script>
   <script src="../assets/js/consultaSPN.js"></script>
   <script src="../assets/js/consulta1005.js"></script>
+  <script src="../assets/js/consultaPrevalNum.js"></script>
   <script src="../assets/js/eliminarNumero.js"></script>
   <script src="../assets/js/sender4001.js"></script>
   <script src="../assets/js/timer.js"></script>
@@ -1072,18 +1192,14 @@ if (isset($_SESSION['usuario'])) {
       // document.getElementById("numeroFrom").value = "";
       // document.getElementById("numeroTo").value = "";
     });
-
-    const fileExcelClickE = document.querySelector("#excelFileEliminacion");
-    const conTableDos = document.querySelector(".conTableYE");
-    fileExcelClickE.addEventListener("click", () => {
-      conTableDos.style.display = "inline";
-    });
-
+    
+    
+    
     const mostrar = document.querySelector("#btnSearch");
     const mensaje = document.querySelector(".item1");
-
     mostrar.addEventListener("click", () => {
-      if ("#btnSearch") {
+      // if (mostrar) {
+        prevalidationView.style.display = "none";
         mensaje.style.display = "inline";
         mensajeEliminar.style.display = "none";
         //mensaje3.style.display = "none";
@@ -1093,8 +1209,11 @@ if (isset($_SESSION['usuario'])) {
         mensajeConsultaProgramables.style.display = "none";
         //mensaje.classList.toggle("item1");
 
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth' // desplazamiento suave
+        });
 
-        
         document.getElementById("donador").value = 'A definir por el ABD';
         document.querySelector('#ido').value = "102";
         document.querySelector('#PortType').value = "8";
@@ -1124,7 +1243,7 @@ if (isset($_SESSION['usuario'])) {
         document.querySelector('#conTable').style.display = "none";
         numeroFisica();
         btnEnviar.disabled = false;
-      }
+      // }
     });
 
     /* const mostrar3 = document.querySelector("#btnSearch3");
@@ -1156,6 +1275,7 @@ if (isset($_SESSION['usuario'])) {
 
     mostrarConsulta.addEventListener("click", () => {
       mensajeConsulta.style.display = "inline";
+      prevalidationView.style.display = "none";
       mensajeConsultaEliminados.style.display = "none";
       mensajeEliminar.style.display = "none";
       mensaje.style.display = "none";
@@ -1168,6 +1288,7 @@ if (isset($_SESSION['usuario'])) {
 
     mostrarConsultaProgramables.addEventListener("click", () => {
       mensajeConsultaProgramables.style.display = "inline";
+      prevalidationView.style.display = "none";
       mensajeConsulta.style.display = "none";
       mensajeConsultaEliminados.style.display = "none";
       mensajeEliminar.style.display = "none";
@@ -1181,6 +1302,7 @@ if (isset($_SESSION['usuario'])) {
 
     mostrarConsultaEliminados.addEventListener("click", () => {
       mensajeConsultaEliminados.style.display = "inline";
+      prevalidationView.style.display = "none";
       mensajeConsulta.style.display = "none";
       mensajeConsultaProgramables.style.display = "none";
       mensajeEliminar.style.display = "none";
@@ -1193,6 +1315,7 @@ if (isset($_SESSION['usuario'])) {
     const mensajeEliminar = document.querySelector(".item7");
 
     mostrarEliminar.addEventListener("click", () => {
+      prevalidationView.style.display = "none";
       mensajeEliminar.style.display = "inline";
       mensajeConsulta.style.display = "none";
       mensajeConsultaProgramables.style.display = "none";

@@ -244,7 +244,6 @@ document.querySelector('#buscaPortId').addEventListener('click', async ()=>{
         });
     }
     showLoading();
-   
     if (buscaPortId !== "") {
 
         let dataP = new FormData();
@@ -275,6 +274,9 @@ document.querySelector('#buscaPortId').addEventListener('click', async ()=>{
                 }
             }
         });
+    } else {
+        Swal.close();
+        Swal.fire("Warning","El campo no puede estar vacío","warning");
     }
 });
 
@@ -326,8 +328,9 @@ async function ProcessConsulta(formdata,url = '../php/consultaSPN.php'){
     } */
     })   
     if (res.ok){
-        //console.log(res.status);
+        console.log(res);
         let text = await res.json();// res.text()
+        console.log(text);
         return text;
     }else{
         //console.log(res.status);

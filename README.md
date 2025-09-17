@@ -198,3 +198,34 @@ Dribbble: <https://dribbble.com/creativetim>
 TikTok: <https://tiktok.com/@creative.tim>
 
 Instagram: <https://instagram.com/creativetimofficial>
+
+
+
+
+### Another dates of the aplication
+
+Lenguaje de programación: PHP 8.1.25
+Tipo de base de datos: Oracle
+Numero de conecciones a la base de datos permitidas: 3080
+
+Servidor Web: Apache HTTP Server 2.4.58
+Extensión de Servidor Web: OpenSSL 3.1.3
+
+Tipografía: 
+- Font Awesome
+- Google Font API
+
+Gráficos JavaScript:
+- D3
+- ApexCharts.js
+- xCharts
+- Chart.js
+
+Librerías JavaScript
+- core-js 2.6.9
+- SweetAlert2
+- jQuery 3.5.1
+
+Miscelánea: Popper
+CDN: jsDelivr
+UI Frameworks: Bootstrap 5

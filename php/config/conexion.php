@@ -17,7 +17,10 @@ class Conectar{
 }
 
 try {
+    // $conn = oci_connect('PORTABILIDAD','6iDtw4FdrC5C4U39.1','minias.izzitelecom.net:1597/spnprddbservice.izzitelecom.net');
     $conn = oci_connect('portabilidad','wn8g6yW_#Wt4BFYsky','etalides.izzitelecom.net:1595/spndesarrolloservice.izzitelecom.net');
+    // $conn = oci_connect('PORTABILIDAD','PorT4bLDD.8304FD,s21','172.21.20.153:1521/CVDBPTBD');
+
     // 'SPNDESARROLLO=(DESCRIPTION=(
     //     ADDRESS=(PROTOCOL=TCP)
     //     (HOST=etalides.izzitelecom.net)
@@ -32,9 +35,10 @@ try {
 
 /* class ConectarORC{
     function conectardb(){
-        try { */
+        try {
             $conn = oci_connect('portabilidad','wn8g6yW_#Wt4BFYsky','etalides.izzitelecom.net:1595/spndesarrolloservice.izzitelecom.net');
-         /*    return $conn;
+            // $conn = oci_connect('PORTABILIDAD','PorT4bLDD.8304FD,s21','172.21.20.153:1521/CVDBPTBD');
+            return $conn;
         } catch (Exeption $e) {
             print "Error" . $e->getMessage() . "</br>";
             die();

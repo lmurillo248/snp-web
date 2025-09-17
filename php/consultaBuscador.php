@@ -9,6 +9,8 @@ try {
     $tableConsultaBuscador = "";
     $stid = oci_parse($conn, "SELECT ID, FECHA, SENDER, PORTID, PORTID_AUX, NOTA, MESSAGEID, ACUSE, XMLMSG 
                                 FROM SPN_MSJ WHERE PORTID = :buscaPortId OR NUMBERFROM = :buscaPortId ORDER BY MESSAGEID DESC");
+    // $stid = oci_parse($conn, "SELECT ID, FECHA_MSG AS FECHA, ORIGEN AS SENDER, PORTID, MENSAJES, DESTINO, MSGID AS MESSAGEID, MENSAJES AS ACUSE, MSGXML AS NOTA 
+    //                             FROM POR_INFO_MSG_PORTABILIDAD WHERE PORTID = :buscaPortId OR MSGXML LIKE '%"+":buscaPortId"+"%' ORDER BY MSGID DESC");
 
     oci_bind_by_name($stid, ":buscaPortId", $buscaPortId);
     oci_execute($stid);

@@ -183,9 +183,13 @@ try {
             ";
         
             // $location = "http://172.21.141.123:7001/spn/spnService?WSDL";
+            // $location = "http://172.28.109.42:7001/spn/spnService?WSDL";
+            // $location = "http://172.28.109.43:7001/spn/spnService?WSDL";
             // $location = "http://172.28.108.181:7001/spn/spnService?WSDL";
-            $location = "http://172.28.108.182:7001/spn/spnService?WSDL";
+            // $location = "http://172.28.108.182:7001/spn/spnService?WSDL";
             // $location = "http://172.21.151.77:7001/spn/spnService?WSDL";
+            $location = "http://172.21.132.108:7001/spn/spnService?wsdl";
+            // $location = "http://172.21.132.109:7001/spn/spnService?wsdl";
                 
             $request = '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:spn="https://bmartinezc:7001/spnService">
                             <soapenv:Header/>

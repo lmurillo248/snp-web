@@ -8,6 +8,36 @@ try {
                                 FROM SPN_MSJ S 
                                 LEFT JOIN SPN_MSJ_1006 K ON K.PORTID = S.PORTID
                                 WHERE S.MESSAGEID = '1005' AND S.PORTID_AUX IS NULL AND K.PORTID IS NULL");
+
+    // $stid = oci_parse($conn, "WITH RecentData AS (
+    //                                 SELECT 
+    //                                     S.ID AS ID, 
+    //                                     S.FECHA_MSG AS FECHA, 
+    //                                     S.ORIGEN AS SENDER, 
+    //                                     S.PORTID AS PORTID, 
+    //                                     S.PORTID AS PORTID_AUX, 
+    //                                     S.MENSAJES AS NOTA, 
+    //                                     S.MSGID AS MESSAGEID, 
+    //                                     S.DESTINO AS ACUSE, 
+    //                                     S.MSGXML AS XMLMSG,
+    //                                     ROW_NUMBER() OVER (PARTITION BY S.PORTID ORDER BY S.FECHA_MSG DESC) AS rn
+    //                                 FROM POR_INFO_MSG_PORTABILIDAD S 
+    //                                 LEFT JOIN (
+    //                                     SELECT DISTINCT PORTID
+    //                                     FROM POR_INFO_MSG_PORTABILIDAD p1
+    //                                     WHERE NOT EXISTS (
+    //                                         SELECT 1
+    //                                         FROM POR_INFO_MSG_PORTABILIDAD p2
+    //                                         WHERE p2.PORTID = p1.PORTID
+    //                                         AND p2.MSGID > 1005
+    //                                     )
+    //                                 ) K ON K.PORTID = S.PORTID
+    //                                 WHERE K.PORTID = S.PORTID AND S.MSGID > '1004'
+    //                             )
+    //                             SELECT *
+    //                             FROM RecentData
+    //                             WHERE rn = 1
+    //                             ORDER BY FECHA DESC");
     oci_execute($stid);
 
     $tableConsulta.= "
